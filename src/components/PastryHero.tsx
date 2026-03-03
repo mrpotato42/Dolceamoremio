@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
-import { ShoppingBag, ArrowRight, Instagram, Play, Facebook } from 'lucide-react';
+import { motion, type Variants } from 'framer-motion';
+import { ShoppingBag, Instagram, Play, Facebook } from 'lucide-react';
 
 /**
  * PROPS PARA LOS PISOS DEL PASTEL
