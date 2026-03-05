@@ -1,8 +1,8 @@
-import PastryHero from './components/PastryHero';
 import './App.css'
+import Home from './pages/Home';
 
 function App() {
-  return <PastryHero />;
+  return <Home />;
 }
 
 export default App

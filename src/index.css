@@ -37,8 +37,15 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 /* Optimización de renderizado */
@@ -48,6 +55,7 @@ html {
 }
 
 body {
+  background-color: var(--color-brand-bg);
   color: var(--color-brand-choco);
-  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
