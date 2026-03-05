@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ShoppingBag, Plus } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import { SIGNATURE_COLLECTION } from '../constants/Products'; // O donde guardes los datos
 
 export const EditorialGallery = () => {
@@ -31,7 +31,7 @@ export const EditorialGallery = () => {
 
                 {/* LADO DERECHO: Los Productos (Scroll) */}
                 <div className="flex flex-col gap-24 lg:w-2/3 lg:py-32">
-                    {SIGNATURE_COLLECTION.map((product, index) => (
+                    {SIGNATURE_COLLECTION.map((product) => (
                         <motion.article
                             key={product.id}
                             initial={{ opacity: 0, y: 50 }}
