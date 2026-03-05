@@ -8,8 +8,8 @@ export const FallingCake = () => {
             <CakeTier
                 level={2}
                 color="var(--color-brand-pink)"
-                sizeClass="h-32 w-48 md:h-44 md:w-64"
-                marginLeft="-75%"
+                sizeClass="h-24 w-40 md:h-36 md:w-56"
+                marginLeft="-100%"
                 zIndex={30}
             >
                 <div className="absolute top-4 h-4 w-full bg-white/10" />
@@ -19,8 +19,8 @@ export const FallingCake = () => {
             <CakeTier
                 level={1}
                 color="var(--color-brand-coral)"
-                sizeClass="h-40 w-72 md:h-56 md:w-96"
-                marginLeft="-80%"
+                sizeClass="h-32 w-56 md:h-48 md:w-80"
+                marginLeft="-100%"
                 zIndex={20}
             >
                 <div className="absolute inset-0 flex items-center justify-around opacity-20">
@@ -32,8 +32,8 @@ export const FallingCake = () => {
             <CakeTier
                 level={0}
                 color="var(--color-brand-peach)"
-                sizeClass="h-52 w-96 md:h-72 md:w-[32rem]"
-                marginLeft="-85%"
+                sizeClass="h-40 w-72 md:h-60 md:w-[28rem]"
+                marginLeft="-95%"
                 zIndex={10}
             >
                 <div className="absolute bottom-0 h-12 w-full bg-brand-choco/5" />

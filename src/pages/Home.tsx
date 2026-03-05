@@ -10,12 +10,12 @@ export default function Home() {
             <section className="relative w-full h-dvh overflow-hidden flex flex-col">
                 <BackgroundTextures textures={TEXTURES} />
 
-                <div className="flex-1 w-full px-16 relative z-10 flex flex-col items-center justify-center text-center gap-4">
-                    <p className="font-body text-2xl/7 text-brand-choco">
-                        Transformamos tus sueños en dulces realidades
+                <div className="flex-1 w-full px-12 pt-32 pb-16 md:pt-32 md:pb-20 relative z-10 flex flex-col items-center justify-center text-center gap-2">
+                    <p className="font-body text-2xl/7 uppercase text-brand-choco">
+                        respoteria creativa
                     </p>
-                    <p className="font-body text-[10px] font-bold uppercase tracking-[0.5em] text-brand-choco/60">
-                        respoteria creativa & postres únicos
+                    <p className="font-body text-[10px] font-bold tracking-[0.5em] text-brand-choco/60">
+                        Transformamos tus sueños en dulces realidades
                     </p>
                 </div>
 

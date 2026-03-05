@@ -35,7 +35,7 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed inset-y-0 right-0 z-70 flex w-full max-w-sm flex-col bg-[#0B0B0B] text-white shadow-2xl"
+                        className="fixed inset-y-0 right-0 z-70 flex w-full max-w-sm flex-col bg-brand-choco text-white shadow-2xl"
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between p-6">
