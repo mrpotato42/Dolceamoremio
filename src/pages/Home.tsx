@@ -34,7 +34,9 @@ export default function Home() {
                 {/* Texto de Apoyo Editorial */}
 
             </section>
-            <EditorialGallery />
+            <section id="coleccion">
+                <EditorialGallery />
+            </section>
             {/* PRÓXIMOS BLOQUES (Se añadirán después según necesidad) */}
         </MainLayout>
     );

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface NavMenuProps {
     isOpen: boolean;
@@ -7,12 +8,10 @@ interface NavMenuProps {
 }
 
 const menuLinks = [
-    { title: 'MENU 1', href: '#' },
-    { title: 'MENU 2', href: '#' },
-    { title: 'MENU 3', href: '#' },
-    { title: 'MENU 4', href: '#' },
-    { title: 'MENU 5', href: '#' },
-    { title: 'MENU 6', href: '#' },
+    { title: 'INICIO', href: '/' },
+    { title: 'COLECCIÓN', href: '/#coleccion' },
+    { title: 'HISTORIA', href: '#' },
+    { title: 'CONTACTO', href: '#' },
 ];
 
 export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
@@ -51,38 +50,38 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                         {/* Navigation Links */}
                         <nav className="flex-1 px-8 py-12">
                             <p className="mb-8 text-xs font-bold tracking-[0.2em] text-white/40">
-                                CATEGORÍAS
+                                EXPLORAR
                             </p>
                             <div className="flex flex-col gap-4">
                                 {menuLinks.map((link, idx) => (
-                                    <motion.a
+                                    <motion.div
                                         key={link.title}
-                                        href={link.href}
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.1 + idx * 0.05 }}
-                                        className="font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl"
                                     >
-                                        {link.title}
-                                    </motion.a>
+                                        {link.href.startsWith('/') ? (
+                                            <Link
+                                                to={link.href}
+                                                onClick={onClose}
+                                                className="font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl"
+                                            >
+                                                {link.title}
+                                            </Link>
+                                        ) : (
+                                            <a
+                                                href={link.href}
+                                                className="font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl"
+                                            >
+                                                {link.title}
+                                            </a>
+                                        )}
+                                    </motion.div>
                                 ))}
                             </div>
                         </nav>
-
-                        {/* Footer / Extra info */}
-                        <div className="p-8 border-t border-white/5">
-                            <div className="flex gap-4 overflow-x-auto no-scrollbar">
-                                <button className="rounded-full bg-white px-6 py-2 text-black font-bold text-sm whitespace-nowrap">
-                                    Categoría 1
-                                </button>
-                                <button className="rounded-full border border-white/20 px-6 py-2 font-bold text-sm whitespace-nowrap hover:bg-white/10 transition-colors">
-                                    Categoría 2
-                                </button>
-                                <button className="rounded-full border border-white/20 px-6 py-2 font-bold text-sm whitespace-nowrap hover:bg-white/10 transition-colors">
-                                    Categoría 3
-                                </button>
-                            </div>
-                        </div>
+                        
+                        {/* ... existing categories or other footer elements ... */}
                     </motion.div>
                 </>
             )}

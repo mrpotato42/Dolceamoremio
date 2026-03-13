@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
-import { SIGNATURE_COLLECTION } from '../constants/Products'; // O donde guardes los datos
+import { SIGNATURE_COLLECTION } from '../constants/Products';
+import { Link } from 'react-router-dom';
 
 export const EditorialGallery = () => {
     return (
@@ -40,7 +41,7 @@ export const EditorialGallery = () => {
                             className="flex flex-col group"
                         >
                             {/* Imagen del Producto (Estilo Retrato/Revista) */}
-                            <div className="relative mb-8 w-full overflow-hidden bg-brand-choco/5 pt-[120%] md:pt-[80%] lg:pt-[100%]">
+                            <Link to={`/producto/${product.id}`} className="relative mb-8 w-full overflow-hidden bg-brand-choco/5 pt-[120%] md:pt-[80%] lg:pt-[100%] block">
                                 <img
                                     src={product.image}
                                     alt={product.name}
@@ -51,16 +52,18 @@ export const EditorialGallery = () => {
                                 <div className="absolute left-4 top-4 font-title text-5xl text-brand-bg drop-shadow-md">
                                     {product.id}
                                 </div>
-                            </div>
+                            </Link>
 
                             {/* Información y CTA */}
                             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
 
                                 {/* Textos */}
                                 <div className="md:w-2/3">
-                                    <h3 className="mb-4 font-title text-4xl text-brand-choco md:text-5xl">
-                                        {product.name}
-                                    </h3>
+                                    <Link to={`/producto/${product.id}`} className="block group/title">
+                                        <h3 className="mb-4 font-title text-4xl text-brand-choco md:text-5xl group-hover/title:text-brand-pink transition-colors">
+                                            {product.name}
+                                        </h3>
+                                    </Link>
 
                                     {/* Notas de Sabor (Estilo Perfume) */}
                                     <div className="mb-4 flex flex-wrap gap-2 font-subtitle text-[9px] font-bold uppercase tracking-widest text-brand-choco/50">
