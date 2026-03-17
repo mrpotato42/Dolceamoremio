@@ -1,18 +1,20 @@
-import { useParams, Link } from 'react-router-dom';
+"use client";
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { MainLayout } from '../components/layout/MainLayout';
 import { SIGNATURE_COLLECTION } from '../constants/Products';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 
 export default function ProductDetail() {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams() as { id: string };
     const product = SIGNATURE_COLLECTION.find(p => p.id === id);
 
     if (!product) {
         return (
             <MainLayout className="items-center justify-center p-20">
                 <h1 className="text-2xl font-body text-brand-choco mb-4">Producto no encontrado</h1>
-                <Link to="/" className="text-brand-pink underline">Volver al inicio</Link>
+                <Link href="/" className="text-brand-pink underline">Volver al inicio</Link>
             </MainLayout>
         );
     }
@@ -38,7 +40,7 @@ export default function ProductDetail() {
                     transition={{ delay: 0.2 }}
                     className="w-full md:w-1/2 flex flex-col gap-6"
                 >
-                    <Link to="/" className="flex items-center gap-2 text-brand-choco/60 hover:text-brand-choco transition-colors">
+                    <Link href="/" className="flex items-center gap-2 text-brand-choco/60 hover:text-brand-choco transition-colors">
                         <ArrowLeft size={16} />
                         <span className="text-sm font-body uppercase tracking-widest">Colección</span>
                     </Link>

@@ -1,8 +1,9 @@
+"use client";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { NavMenu } from './NavMenu';
 import { MenuToggle } from './MenuToggle';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ export const Navbar = () => {
     return (
         <>
             <header className="absolute top-0 left-0 z-50 flex w-full items-start justify-between px-6 pt-8 pb-12 md:px-12 backdrop-blur-sm mask-b-from-75% mask-b-to-100% bg-white/5">
-                <Link to="/">
+                <Link href="/">
                     <motion.img
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}

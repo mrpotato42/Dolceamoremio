@@ -1,3 +1,4 @@
+"use client";
 import { BackgroundTextures } from '../components/hero/BackgroundTextures';
 import { FallingCake } from '../components/cake/FallingCake';
 import { TEXTURES } from '../constants/Pastry';

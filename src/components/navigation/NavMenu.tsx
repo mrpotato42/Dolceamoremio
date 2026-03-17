@@ -1,6 +1,7 @@
+"use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface NavMenuProps {
     isOpen: boolean;
@@ -62,7 +63,7 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                                     >
                                         {link.href.startsWith('/') ? (
                                             <Link
-                                                to={link.href}
+                                                href={link.href}
                                                 onClick={onClose}
                                                 className="font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl"
                                             >

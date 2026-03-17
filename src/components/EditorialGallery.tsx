@@ -1,7 +1,8 @@
+"use client";
 import { motion } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 import { SIGNATURE_COLLECTION } from '../constants/Products';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const EditorialGallery = () => {
     return (
@@ -41,7 +42,7 @@ export const EditorialGallery = () => {
                             className="flex flex-col group"
                         >
                             {/* Imagen del Producto (Estilo Retrato/Revista) */}
-                            <Link to={`/producto/${product.id}`} className="relative mb-8 w-full overflow-hidden bg-brand-choco/5 pt-[120%] md:pt-[80%] lg:pt-[100%] block">
+                            <Link href={`/producto/${product.id}`} className="relative mb-8 w-full overflow-hidden bg-brand-choco/5 pt-[120%] md:pt-[80%] lg:pt-[100%] block">
                                 <img
                                     src={product.image}
                                     alt={product.name}
@@ -59,7 +60,7 @@ export const EditorialGallery = () => {
 
                                 {/* Textos */}
                                 <div className="md:w-2/3">
-                                    <Link to={`/producto/${product.id}`} className="block group/title">
+                                    <Link href={`/producto/${product.id}`} className="block group/title">
                                         <h3 className="mb-4 font-title text-4xl text-brand-choco md:text-5xl group-hover/title:text-brand-pink transition-colors">
                                             {product.name}
                                         </h3>
