@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
@@ -26,7 +26,7 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 z-60 bg-black/40 backdrop-blur-sm"
+                        className='fixed inset-0 z-60 bg-black/40 backdrop-blur-sm'
                     />
 
                     {/* Menu Drawer */}
@@ -35,12 +35,12 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed inset-y-0 right-0 z-70 flex w-full max-w-sm flex-col bg-brand-choco text-white shadow-2xl"
+                        className='fixed inset-y-0 right-0 z-70 flex w-full max-w-sm flex-col bg-brand-choco text-white shadow-2xl'
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6">
-                            <div className="flex items-center gap-6 text-sm font-medium tracking-widest">
-                                <button className="flex items-center gap-1 hover:text-brand-pink transition-colors">
+                        <div className='flex items-center justify-between p-6'>
+                            <div className='flex items-center gap-6 text-sm font-medium tracking-widest'>
+                                <button className='flex items-center gap-1 hover:text-brand-pink transition-colors'>
                                     <Globe size={16} />
                                     EN
                                     <ChevronDown size={14} />
@@ -49,11 +49,11 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                         </div>
 
                         {/* Navigation Links */}
-                        <nav className="flex-1 px-8 py-12">
-                            <p className="mb-8 text-xs font-bold tracking-[0.2em] text-white/40">
+                        <nav className='flex-1 px-8 py-12'>
+                            <p className='mb-8 text-xs font-bold tracking-[0.2em] text-white/40'>
                                 EXPLORAR
                             </p>
-                            <div className="flex flex-col gap-4">
+                            <div className='flex flex-col gap-4'>
                                 {menuLinks.map((link, idx) => (
                                     <motion.div
                                         key={link.title}
@@ -65,14 +65,14 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                                             <Link
                                                 href={link.href}
                                                 onClick={onClose}
-                                                className="font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl"
+                                                className='font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl'
                                             >
                                                 {link.title}
                                             </Link>
                                         ) : (
                                             <a
                                                 href={link.href}
-                                                className="font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl"
+                                                className='font-title text-4xl font-black tracking-tight hover:text-brand-pink transition-colors md:text-5xl'
                                             >
                                                 {link.title}
                                             </a>

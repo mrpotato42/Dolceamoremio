@@ -1,10 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* Tipografías Personalizadas */
-  --font-title: "BakerTitle";
-  --font-subtitle: "BakerSubtitle";
-  --font-body: "BakerBody";
+  --font-title: 'BakerTitle';
+  --font-subtitle: 'BakerSubtitle';
+  --font-body: 'BakerBody';
+  --font-number: 'BakerNumber';
 
   /* Paleta de Colores solicitada */
   --color-brand-pink: #EB5D8D;
@@ -20,19 +21,25 @@
 
 @font-face {
   font-family: 'BakerTitle';
-  src: url('./assets/fonts/title.ttf') format('opentype');
+  src: url('../assets/fonts/title.ttf') format('opentype');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'BakerSubtitle';
-  src: url('./assets/fonts/subtitle.otf') format('truetype');
+  src: url('../assets/fonts/subtitle.otf') format('truetype');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'BakerBody';
-  src: url('./assets/fonts/body.ttf') format('truetype');
+  src: url('../assets/fonts/body.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BakerNumber';
+  src: url('../assets/fonts/numbers.ttf') format('truetype');
   font-display: swap;
 }
 

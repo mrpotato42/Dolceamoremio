@@ -1,5 +1,4 @@
-import '../index.css';
-import '../App.css';
+import '@/styles/index.css';
 import type { ReactNode } from 'react';
 
 export const metadata = {
@@ -9,9 +8,9 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang='es'>
       <body>
         {children}
       </body>
