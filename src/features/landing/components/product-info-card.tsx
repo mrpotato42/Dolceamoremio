@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { ShoppingBag, Minus, Plus } from 'lucide-react';
 
 export interface ProductInfoCardProps {
+    productId: string;
     title: string;
     description: string;
     price: string;
@@ -22,6 +24,7 @@ const positionClasses: Record<NonNullable<ProductInfoCardProps['position']>, str
 };
 
 export const ProductInfoCard = ({
+    productId,
     title,
     description,
     price,
@@ -37,7 +40,7 @@ export const ProductInfoCard = ({
         <div
             className={`
                 absolute z-10 ${positionClasses[position]}
-                w-[280px] md:w-[320px]
+                w-[230px] md:w-[310px]
                 backdrop-blur-xl bg-white/85
                 border border-white/50
                 rounded-2xl
@@ -46,48 +49,49 @@ export const ProductInfoCard = ({
                 ${className}
             `}
         >
-            {/* Accent bar */}
-            <div className="h-[3px] w-full bg-linear-to-r from-brand-pink via-brand-coral to-brand-peach" />
 
-            <div className="p-5 md:p-6 flex flex-col gap-4">
+
+            <div className="p-4 md:p-5 flex flex-col gap-3">
                 {/* Title */}
-                <h3 className="font-subtitle text-xl md:text-2xl text-brand-choco leading-tight">
+                <h3 className="font-subtitle text-lg md:text-xl text-brand-choco leading-tight">
                     {title}
                 </h3>
 
-                {/* Description */}
-                <p className="font-body text-xs md:text-sm leading-relaxed text-brand-choco/65 line-clamp-3">
-                    {description}
-                </p>
+                {/* Description acting as a Link */}
+                <Link
+                    href={`/producto/${productId}`}
+                    className="group/desc block"
+                >
+                    <p className="font-body text-[11px] md:text-xs leading-relaxed text-brand-choco/65 line-clamp-2 transition-colors group-hover/desc:text-brand-pink">
+                        {description}
+                    </p>
+                </Link>
 
-                {/* Divider */}
-                <div className="h-px w-full bg-brand-choco/8" />
-
-                {/* Price + Quantity row */}
-                <div className="flex items-center justify-between">
+                {/* Price + Quantity row (No divider to save space) */}
+                <div className="flex items-center justify-between mt-1">
                     {/* Price */}
-                    <span className="font-subtitle text-lg md:text-xl tracking-wide text-brand-choco font-semibold">
+                    <span className="font-subtitle text-base md:text-lg tracking-wide text-brand-choco font-semibold">
                         {price}
                     </span>
 
                     {/* Quantity selector */}
-                    <div className="flex items-center gap-0 rounded-lg border border-brand-choco/12 overflow-hidden">
+                    <div className="flex items-center gap-0 rounded-lg border border-brand-choco/12 overflow-hidden bg-white/50">
                         <button
                             onClick={decrement}
                             aria-label="Disminuir cantidad"
-                            className="group/minus flex items-center justify-center w-8 h-8 text-brand-choco/60 hover:bg-brand-pink/10 hover:text-brand-pink transition-all duration-200"
+                            className="group/minus flex items-center justify-center w-7 h-7 text-brand-choco/60 hover:bg-brand-pink/10 hover:text-brand-pink transition-all duration-200"
                         >
-                            <Minus size={14} strokeWidth={2} />
+                            <Minus size={12} strokeWidth={2} />
                         </button>
-                        <span className="flex items-center justify-center w-8 h-8 font-subtitle text-sm text-brand-choco bg-brand-choco/3 select-none">
+                        <span className="flex items-center justify-center w-7 h-7 font-subtitle text-xs text-brand-choco select-none">
                             {quantity}
                         </span>
                         <button
                             onClick={increment}
                             aria-label="Aumentar cantidad"
-                            className="group/plus flex items-center justify-center w-8 h-8 text-brand-choco/60 hover:bg-brand-pink/10 hover:text-brand-pink transition-all duration-200"
+                            className="group/plus flex items-center justify-center w-7 h-7 text-brand-choco/60 hover:bg-brand-pink/10 hover:text-brand-pink transition-all duration-200"
                         >
-                            <Plus size={14} strokeWidth={2} />
+                            <Plus size={12} strokeWidth={2} />
                         </button>
                     </div>
                 </div>
@@ -95,21 +99,21 @@ export const ProductInfoCard = ({
                 {/* Add to cart button */}
                 <button
                     className="
-                        group/cart relative w-full flex items-center justify-center gap-3
-                        py-3 rounded-xl
+                        group/cart relative w-full flex items-center justify-center gap-2
+                        py-2.5 rounded-xl
                         bg-linear-to-r from-brand-pink to-brand-coral
-                        text-white font-subtitle text-xs md:text-sm uppercase tracking-[0.18em]
+                        text-white font-body text-[10px] md:text-[11px] uppercase tracking-[0.15em]
                         overflow-hidden
                         transition-shadow duration-300
-                        hover:shadow-[0_4px_20px_rgba(235,93,141,0.35)]
-                        active:scale-[0.97]
+                        hover:shadow-[0_4px_15px_rgba(235,93,141,0.3)]
+                        active:scale-[0.98]
                     "
                 >
                     {/* Shimmer effect */}
                     <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/cart:translate-x-full transition-transform duration-700 ease-in-out" />
 
-                    <span className="relative z-10">Agregar al carrito</span>
-                    <ShoppingBag size={15} strokeWidth={1.8} className="relative z-10 transition-transform duration-300 group-hover/cart:-translate-y-0.5" />
+                    <span className="relative z-10">Agregar al pedido</span>
+                    <ShoppingBag size={14} strokeWidth={1.8} className="relative mb-px z-10 transition-transform duration-300 group-hover/cart:-translate-y-0.5" />
                 </button>
             </div>
         </div>
