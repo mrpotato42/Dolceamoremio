@@ -59,7 +59,7 @@ export const ProductInfoCard = ({
 
                 {/* Description acting as a Link */}
                 <Link
-                    href={`/producto/${productId}`}
+                    href={`/product-details/${productId}`}
                     className="group/desc block"
                 >
                     <p className="font-body text-[11px] md:text-xs leading-relaxed text-brand-choco/65 line-clamp-2 transition-colors group-hover/desc:text-brand-pink">

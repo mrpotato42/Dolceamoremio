@@ -1,14 +1,37 @@
 'use client';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/layout/main-layout';
-import { SIGNATURE_COLLECTION } from '@/constants/Products';
 import { FadeIn } from '@/components/animations/fade-in';
 import { ArrowLeft } from 'lucide-react';
+import { getProductById } from '@/services/productService';
+import type { Product } from '@/constants/Products';
 
 export default function ProductDetail() {
+    const router = useRouter();
     const { id } = useParams() as { id: string };
-    const product = SIGNATURE_COLLECTION.find(p => p.id === id);
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            setLoading(true);
+            const data = await getProductById(id);
+            setProduct(data);
+            setLoading(false);
+        };
+        fetchProduct();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <MainLayout className='items-center justify-center p-20 animate-pulse'>
+                <div className='w-full h-8 bg-brand-choco/10 rounded mb-4'></div>
+                <div className='w-1/2 h-6 bg-brand-choco/10 rounded'></div>
+            </MainLayout>
+        );
+    }
 
     if (!product) {
         return (
@@ -40,10 +63,10 @@ export default function ProductDetail() {
                     delay={0.2}
                     className='w-full md:w-1/2 flex flex-col gap-6'
                 >
-                    <Link href='/' className='flex items-center gap-2 text-brand-choco/60 hover:text-brand-choco transition-colors'>
+                    <button onClick={() => router.back()} className='flex items-center gap-2 text-brand-choco/60 hover:text-brand-choco transition-colors'>
                         <ArrowLeft size={16} />
                         <span className='text-sm font-body uppercase tracking-widest'>Colección</span>
-                    </Link>
+                    </button>
 
                     <div>
                         <h1 className='text-4xl md:text-5xl font-body text-brand-choco mb-2'>{product.name}</h1>

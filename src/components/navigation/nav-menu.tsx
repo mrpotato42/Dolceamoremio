@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 interface NavMenuProps {
     isOpen: boolean;
@@ -16,6 +17,17 @@ const menuLinks = [
 ];
 
 export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
+    // Bloquear el scroll del body cuando el menú esté abierto
+    useEffect(() => {
+        if (isOpen) {
+            const originalStyle = window.getComputedStyle(document.body).overflow;
+            document.body.style.overflow = 'hidden';
+            return () => {
+                document.body.style.overflow = originalStyle;
+            };
+        }
+    }, [isOpen]);
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -81,7 +93,7 @@ export const NavMenu = ({ isOpen, onClose }: NavMenuProps) => {
                                 ))}
                             </div>
                         </nav>
-                        
+
                         {/* ... existing categories or other footer elements ... */}
                     </motion.div>
                 </>
