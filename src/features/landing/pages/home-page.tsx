@@ -1,10 +1,10 @@
 'use client';
-import { BackgroundTextures } from '@/features/home/components/hero/background-textures';
-import { FallingCake } from '@/features/home/components/cake/falling-cake';
+import { BackgroundTextures } from '@/features/landing/components/hero/background-textures';
+import { FallingCake } from '@/features/landing/components/cake/falling-cake';
 import { TEXTURES } from '@/constants/Pastry';
 import { FadeIn } from '@/components/animations/fade-in';
 import { MainLayout } from '@/components/layout/main-layout';
-import { EditorialGallery } from '@/features/home/pages/editorial-gallery';
+import { EditorialGallery } from '@/features/landing/pages/editorial-gallery';
 
 export default function Home() {
     return (
