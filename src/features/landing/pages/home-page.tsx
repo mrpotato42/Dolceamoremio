@@ -3,12 +3,12 @@ import { BackgroundTextures } from '@/features/landing/components/hero/backgroun
 import { FallingCake } from '@/features/landing/components/cake/falling-cake';
 import { TEXTURES } from '@/constants/Pastry';
 import { FadeIn } from '@/components/animations/fade-in';
-import { MainLayout } from '@/components/layout/main-layout';
 import { EditorialGallery } from '@/features/landing/pages/editorial-gallery';
+import { Catalog } from '@/features/landing/components/catalog';
 
 export default function Home() {
     return (
-        <MainLayout className='p-0!'>
+        <div className='w-full flex-1 flex flex-col'>
             {/* HERO BLOCK - 100dvh flush to viewport */}
             <section className='relative w-full h-dvh overflow-hidden flex flex-col'>
                 <BackgroundTextures textures={TEXTURES} />
@@ -39,7 +39,11 @@ export default function Home() {
             <section id='coleccion'>
                 <EditorialGallery />
             </section>
+
+            {/* CTA AL CATÁLOGO COMPLETO */}
+            <Catalog />
+
             {/* PRÓXIMOS BLOQUES (Se añadirán después según necesidad) */}
-        </MainLayout>
+        </div>
     );
 }

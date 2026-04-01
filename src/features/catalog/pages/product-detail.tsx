@@ -2,12 +2,15 @@
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { MainLayout } from '@/components/layout/main-layout';
 import { FadeIn } from '@/components/animations/fade-in';
 import { ArrowLeft } from 'lucide-react';
 import { getProductById } from '@/services/productService';
 import type { Product } from '@/constants/Products';
 
+/**
+ * Product Detail Page
+ * Modularized into the Catalog feature for store-specific business domain logic.
+ */
 export default function ProductDetail() {
     const router = useRouter();
     const { id } = useParams() as { id: string };
@@ -26,24 +29,24 @@ export default function ProductDetail() {
 
     if (loading) {
         return (
-            <MainLayout className='items-center justify-center p-20 animate-pulse'>
-                <div className='w-full h-8 bg-brand-choco/10 rounded mb-4'></div>
-                <div className='w-1/2 h-6 bg-brand-choco/10 rounded'></div>
-            </MainLayout>
+            <div className='flex-1 flex flex-col items-center justify-center p-20 animate-pulse'>
+                <div className='w-full max-w-md h-8 bg-brand-choco/10 rounded mb-4'></div>
+                <div className='w-1/2 max-w-sm h-6 bg-brand-choco/10 rounded'></div>
+            </div>
         );
     }
 
     if (!product) {
         return (
-            <MainLayout className='items-center justify-center p-20'>
+            <div className='flex-1 flex flex-col items-center justify-center p-20'>
                 <h1 className='text-2xl font-body text-brand-choco mb-4'>Producto no encontrado</h1>
                 <Link href='/' className='text-brand-pink underline'>Volver al inicio</Link>
-            </MainLayout>
+            </div>
         );
     }
 
     return (
-        <MainLayout className='p-0!'>
+        <div className='w-full flex-1'>
             <div className='pt-24 pb-12 px-6 md:px-12 flex flex-col md:flex-row gap-12 items-center'>
                 <FadeIn
                     direction='right'
@@ -90,6 +93,6 @@ export default function ProductDetail() {
                     </button>
                 </FadeIn>
             </div>
-        </MainLayout>
+        </div>
     );
 }
