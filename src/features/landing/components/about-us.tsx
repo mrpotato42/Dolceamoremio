@@ -7,18 +7,6 @@ export const AboutUs = () => {
     return (
         <section id="sobre-nosotros" className="w-full bg-white py-24 px-6 md:px-12 lg:px-24 overflow-hidden">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                {/* Image side */}
-                <FadeIn direction="right" distance={50} delay={0.2}>
-                    <div className="relative aspect-square lg:aspect-auto lg:h-[700px] overflow-hidden rounded-2xl shadow-2xl">
-                        <img 
-                            src="/about-us.png" 
-                            alt="Estudio de repostería Dolce AmoreMio" 
-                            className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-brand-choco/5 pointer-events-none" />
-                    </div>
-                </FadeIn>
 
                 {/* Content side */}
                 <div className="flex flex-col gap-12">

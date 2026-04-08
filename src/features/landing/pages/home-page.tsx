@@ -38,12 +38,13 @@ export default function Home() {
                 {/* Texto de Apoyo Editorial */}
 
             </section>
-            
+
+            {/*<AboutUs />*/}
+
             <section id='coleccion'>
                 <EditorialGallery />
             </section>
 
-            <AboutUs />
 
             <CustomOrders />
 
