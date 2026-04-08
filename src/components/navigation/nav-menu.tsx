@@ -12,7 +12,8 @@ interface NavMenuProps {
 const menuLinks = [
     { title: 'INICIO', href: '/' },
     { title: 'COLECCIÓN', href: '/#coleccion' },
-    { title: 'HISTORIA', href: '#' },
+    { title: 'HISTORIA', href: '/#sobre-nosotros' },
+    { title: 'PEDIDOS', href: '/#pedidos-personalizados' },
     { title: 'CONTACTO', href: '#' },
 ];
 

@@ -5,6 +5,8 @@ import { TEXTURES } from '@/constants/Pastry';
 import { FadeIn } from '@/components/animations/fade-in';
 import { EditorialGallery } from '@/features/landing/pages/editorial-gallery';
 import { Catalog } from '@/features/landing/components/catalog';
+import { AboutUs } from '@/features/landing/components/about-us';
+import { CustomOrders } from '@/features/landing/components/custom-orders';
 
 export default function Home() {
     return (
@@ -36,9 +38,14 @@ export default function Home() {
                 {/* Texto de Apoyo Editorial */}
 
             </section>
+            
             <section id='coleccion'>
                 <EditorialGallery />
             </section>
+
+            <AboutUs />
+
+            <CustomOrders />
 
             {/* CTA AL CATÁLOGO COMPLETO */}
             <Catalog />
