@@ -11,8 +11,8 @@ import { CustomOrders } from '@/features/landing/components/custom-orders';
 export default function Home() {
     return (
         <div className='w-full flex-1 flex flex-col'>
-            {/* HERO BLOCK - 100dvh flush to viewport */}
-            <section className='relative w-full h-dvh overflow-hidden flex flex-col'>
+            {/* HERO BLOCK - 100svh flush to viewport */}
+            <section className='relative w-full h-svh overflow-hidden flex flex-col'>
                 <BackgroundTextures textures={TEXTURES} />
 
                 <FadeIn
