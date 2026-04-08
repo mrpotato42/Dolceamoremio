@@ -102,7 +102,7 @@ const EditorialItem = ({ section, index }: { section: EditorialSection; index: n
     return (
         <motion.div
             ref={sectionRef}
-            className="relative w-full h-screen overflow-hidden bg-neutral-100"
+            className="relative w-full h-[90vh] overflow-hidden bg-neutral-100"
             style={{ opacity }}
         >
             {/* Background Image Layer with Parallax */}
