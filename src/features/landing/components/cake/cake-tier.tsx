@@ -15,7 +15,7 @@ export const CakeTier = ({ level, color, sizeClass, marginLeft, zIndex, children
         initial={{ y: -1000, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
-            delay: 0.5 + ((level * 2) - 1) * 0.3, // Lógica inversa para que el de abajo caiga primero
+            delay: 0.4 + ((level * 2) - 1) * 0.1, // Lógica inversa para que el de abajo caiga primero
             type: 'spring',
             stiffness: 100,
             damping: 15,

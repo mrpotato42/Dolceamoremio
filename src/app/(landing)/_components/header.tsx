@@ -11,7 +11,7 @@ export const Header = () => {
 
     return (
         <>
-            <header className='absolute top-0 left-0 z-50 flex w-full items-start justify-between px-6 pt-8 pb-12 md:px-12 backdrop-blur-sm bg-white/5'>
+            <header className='absolute top-0 left-0 z-50 flex w-full items-start justify-between px-6 pt-8 pb-12 md:px-12 backdrop-blur-sm mask-b-fade bg-white/5'>
                 <Link href='/'>
                     <motion.img
                         initial={{ opacity: 0, y: -20 }}
@@ -24,13 +24,15 @@ export const Header = () => {
                 </Link>
             </header>
 
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className='fixed top-8 right-6 z-[80] md:right-12'
+                className='fixed top-7 right-5 z-[80] md:right-11'
             >
-                <MenuToggle isOpen={isMenuOpen} toggle={() => setIsMenuOpen(!isMenuOpen)} />
+                <div className='flex items-center justify-center rounded-xl bg-brand-choco/60 backdrop-blur-md p-1.5 shadow-[0_2px_12px_rgba(0,0,0,0.15)] ring-1 ring-white/10 transition-all duration-300 hover:bg-brand-choco/75'>
+                    <MenuToggle isOpen={isMenuOpen} toggle={() => setIsMenuOpen(!isMenuOpen)} />
+                </div>
             </motion.div>
 
             <NavMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

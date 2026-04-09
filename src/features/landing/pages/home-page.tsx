@@ -18,7 +18,7 @@ export default function Home() {
                 <FadeIn
                     direction='up'
                     distance={10}
-                    delay={2.5}
+                    delay={1.5}
                     duration={0.3}
                     className='flex-1 w-full px-12 pt-32 pb-16 md:pt-32 md:pb-20 relative z-10 flex flex-col items-center justify-center text-center gap-3'
                 >

@@ -9,10 +9,10 @@ interface MenuToggleProps {
 export const MenuToggle = ({ toggle, isOpen }: MenuToggleProps) => (
     <button
         onClick={toggle}
-        className='flex h-10 w-10 items-center justify-center z-80'
+        className='flex h-8 w-8 items-center justify-center z-80'
         aria-label='Toggle Menu'
     >
-        <svg width='23' height='18' viewBox='0 0 23 18'>
+        <svg width='16' height='13' viewBox='0 0 23 18'>
             <motion.path
                 fill='transparent'
                 strokeWidth='3'

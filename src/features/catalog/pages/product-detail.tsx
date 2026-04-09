@@ -46,8 +46,17 @@ export default function ProductDetail() {
     }
 
     return (
-        <div className='w-full flex-1'>
-            <div className='pt-24 pb-12 px-6 md:px-12 flex flex-col md:flex-row gap-12 items-center'>
+        <div className='w-full flex-1 relative'>
+            <div className='absolute top-8 left-6 z-50 md:left-12'>
+                <button
+                    onClick={() => window.history.back()}
+                    className='p-2 rounded-full bg-white/50 backdrop-blur-md hover:bg-white text-brand-choco transition-all active:scale-95 shadow-xs border border-brand-choco/10'
+                >
+                    <ArrowLeft size={24} />
+                </button>
+            </div>
+
+            <div className='pt-32 pb-12 px-6 md:px-12 flex flex-col md:flex-row gap-12 items-center'>
                 <FadeIn
                     direction='right'
                     distance={20}
@@ -66,11 +75,6 @@ export default function ProductDetail() {
                     delay={0.2}
                     className='w-full md:w-1/2 flex flex-col gap-6'
                 >
-                    <button onClick={() => router.back()} className='flex items-center gap-2 text-brand-choco/60 hover:text-brand-choco transition-colors'>
-                        <ArrowLeft size={16} />
-                        <span className='text-sm font-body uppercase tracking-widest'>Colección</span>
-                    </button>
-
                     <div>
                         <h1 className='text-4xl md:text-5xl font-body text-brand-choco mb-2'>{product.name}</h1>
                         <p className='text-2xl font-body text-brand-pink font-medium'>{product.price}</p>

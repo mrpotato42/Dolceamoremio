@@ -14,12 +14,12 @@ export const BackgroundTextures = ({ textures }: Props) => {
         // Retraso inicial de las texturas
         const startTimer = setTimeout(() => {
             setIsVisible(true);
-        }, 3000);
+        }, 500);
 
         // Control de tiempo de cambio de imagen
         const intervalTimer = setInterval(() => {
             setIndex((prev) => (prev + 1) % textures.length);
-        }, 8000); // Control de tiempo de cambio de imagen
+        }, 5000); // Control de tiempo de cambio de imagen
 
         return () => {
             clearTimeout(startTimer);
@@ -34,9 +34,9 @@ export const BackgroundTextures = ({ textures }: Props) => {
                     <motion.div
                         key={index}
                         initial={{ opacity: 0, scale: 1.3 }}
-                        animate={{ opacity: 0.4, scale: 1.1 }}
+                        animate={{ opacity: 0.6, scale: 1.1 }}
                         exit={{ opacity: 0, scale: 1.4 }}
-                        transition={{ duration: 2, ease: 'easeInOut' }}
+                        transition={{ duration: 1, ease: 'easeInOut' }}
                         className='absolute inset-0 h-full w-full'
                     >
                         <img
@@ -44,7 +44,7 @@ export const BackgroundTextures = ({ textures }: Props) => {
                             className='h-full w-full object-cover grayscale-20 contrast-[1.3]'
                             alt='Pastry Texture'
                         />
-                        <div className='absolute inset-0 bg-linear-to-r from-brand-bg via-transparent to-brand-bg/20' />
+                        <div className='absolute inset-0 bg-linear-to-b from-brand-bg via-transparent to-transparent opacity-80' />
                     </motion.div>
                 )}
             </AnimatePresence>
