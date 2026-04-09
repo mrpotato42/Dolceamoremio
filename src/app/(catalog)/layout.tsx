@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Footer } from '@/app/(landing)/_components/footer';
-import { Header } from '@/app/(landing)/_components/header';
+import { HeaderWrapper } from './_components/header-wrapper';
 
 /**
  * Catalog Group Layout
@@ -18,7 +18,7 @@ function CatalogLayout({ children }: { children: ReactNode }) {
             </a>
             
             <div className='relative w-full max-w-full sm:max-w-[100vw] md:max-w-3xl lg:max-w-5xl xl:max-w-[1440px] min-h-svh flex flex-col bg-brand-bg shadow-2xl xl:shadow-[0_0_50px_rgba(0,0,0,0.05)] overflow-hidden'>
-                <Header />
+                <HeaderWrapper />
                 <main id='main-content' className='flex-1 w-full relative z-10 flex flex-col pt-0'>
                     {children}
                 </main>

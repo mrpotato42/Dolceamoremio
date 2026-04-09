@@ -17,6 +17,14 @@
 
   /* Animaciones extra */
   --animate-float: float 6s ease-in-out infinite;
+
+  /* Custom Mask Utilities (Tailwind 4) */
+  --mask-linear-b: linear-gradient(to bottom, black 75%, transparent 100%);
+}
+
+@utility mask-b-fade {
+  mask-image: var(--mask-linear-b);
+  -webkit-mask-image: var(--mask-linear-b);
 }
 
 @font-face {
