@@ -45,8 +45,10 @@ export default function Home() {
                 <EditorialGallery />
             </section>
 
+            <section id='Servicios'>
+                <CustomOrders />
 
-            <CustomOrders />
+            </section>
 
             {/* CTA AL CATÁLOGO COMPLETO */}
             <Catalog />

@@ -1,14 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { ShoppingBag, Minus, Plus } from 'lucide-react';
 
 export interface ProductInfoCardProps {
-    productId: string;
     title: string;
-    description: string;
     price: string;
+    description: string;
     /** Where to position the card within its parent container */
     position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center-left' | 'center-right';
     className?: string;
@@ -24,7 +22,6 @@ const positionClasses: Record<NonNullable<ProductInfoCardProps['position']>, str
 };
 
 export const ProductInfoCard = ({
-    productId,
     title,
     description,
     price,
@@ -52,21 +49,6 @@ export const ProductInfoCard = ({
 
 
             <div className="p-4 md:p-5 flex flex-col gap-3">
-                {/* Title */}
-                <h3 className="font-subtitle text-lg md:text-xl text-brand-choco leading-tight">
-                    {title}
-                </h3>
-
-                {/* Description acting as a Link */}
-                <Link
-                    href={`/products/${productId}`}
-                    className="group/desc block"
-                >
-                    <p className="font-body text-[11px] md:text-xs leading-relaxed text-brand-choco/65 line-clamp-2 transition-colors group-hover/desc:text-brand-pink">
-                        {description}
-                    </p>
-                </Link>
-
                 {/* Price + Quantity row (No divider to save space) */}
                 <div className="flex items-center justify-between mt-1">
                     {/* Price */}

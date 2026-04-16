@@ -22,13 +22,13 @@ export const Footer = () => {
     const year = new Date().getFullYear();
 
     const socialLinks = [
-        { icon: Instagram, href: 'https://instagram.com/dolceamoremio', label: 'Instagram' },
-        { icon: Facebook, href: 'https://facebook.com/dolceamoremio', label: 'Facebook' },
-        { icon: WhatsAppIcon, href: 'https://wa.me/something', label: 'WhatsApp' },
+        { icon: Instagram, href: 'https://instagram.com/dolceamoremiio', label: 'Instagram' },
+        { icon: Facebook, href: 'https://facebook.com/dolceamoremiio', label: 'Facebook' },
+        { icon: WhatsAppIcon, href: 'https://wa.me/573186224291', label: 'WhatsApp' },
     ];
 
     return (
-        <footer className="w-full bg-transparent pt-32 pb-12 px-6 md:px-12 flex flex-col items-center">
+        <footer className="w-full bg-transparent pt-32 pb-24 px-6 md:px-12 flex flex-col items-center">
             <div className="w-full max-w-7xl flex flex-col md:flex-row justify-between items-center gap-12 border-t border-brand-choco/10 pt-16">
 
                 {/* Brand Side */}

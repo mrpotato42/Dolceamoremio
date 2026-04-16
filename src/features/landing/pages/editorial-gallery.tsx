@@ -132,9 +132,23 @@ const EditorialItem = ({ section, index }: { section: EditorialSection; index: n
                 className="absolute inset-0 z-10 pointer-events-none"
                 style={{ y: smoothYCard }}
             >
+                {/* Text Overlay */}
+                <div className="absolute top-[25%] md:top-[60%] -translate-y-1/2 left-6 md:left-16 w-[85%] md:w-1/2 max-w-lg text-left flex flex-col items-start">
+                    {/* Title outside the box */}
+                    <h2 className="w-2/3 text-4xl md:text-6xl font-body text-brand-coral mb-10 tracking-wider drop-shadow-[2px_4px_1px_rgba(0,0,0,0.8)]">
+                        {section.product.title}
+                    </h2>
+
+                    {/* Description inside a semi-transparent white box */}
+                    <div className="w-2/3 p-4 md:p-6 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 shadow-xl">
+                        <p className="text-black/70 text-base md:text-lg font-medium leading-relaxed drop-shadow-md">
+                            {section.product.description}
+                        </p>
+                    </div>
+                </div>
+
                 <div className="relative w-full h-full pointer-events-auto">
                     <ProductInfoCard
-                        productId={section.productId}
                         title={section.product.title}
                         description={section.product.description}
                         price={section.product.price}
