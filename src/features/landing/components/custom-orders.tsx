@@ -45,7 +45,7 @@ export const CustomOrders = () => {
     };
 
     return (
-        <section id="pedidos-personalizados" className="relative w-full py-32 md:py-40 overflow-hidden">
+        <section id="servicios" className="relative w-full py-32 md:py-40 overflow-hidden">
             {/* Subtle background texture */}
             <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-white to-brand-bg" />
             <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, var(--color-brand-choco) 1px, transparent 0)', backgroundSize: '48px 48px' }} />
@@ -55,9 +55,6 @@ export const CustomOrders = () => {
                 {/* Section Header */}
                 <FadeIn direction="up" distance={30}>
                     <div className="text-center mb-20 md:mb-28">
-                        <span className="font-body text-[10px] uppercase tracking-[0.5em] text-brand-pink/80">
-                            Exclusividad
-                        </span>
                         <h2 className="font-body text-4xl md:text-6xl text-brand-choco mt-4 leading-tight">
                             Pedidos Personalizados
                         </h2>
@@ -130,23 +127,23 @@ export const CustomOrders = () => {
                                     {/* ROW 1 — Contact Info: Clean, minimal inputs */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                                         <div className="group">
-                                            <label className="block font-body text-[10px] uppercase tracking-[0.3em] text-brand-choco mb-3">
+                                            <label className="block font-body text-[20px] uppercase tracking-[0.3em] text-brand-choco mb-3">
                                                 Nombre
                                             </label>
                                             <input
                                                 type="text"
                                                 placeholder="Tu nombre completo"
-                                                className="w-full bg-transparent border-b border-brand-choco/10 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/20 focus:border-brand-pink focus:outline-none transition-colors duration-300"
+                                                className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
                                             />
                                         </div>
                                         <div className="group">
-                                            <label className="block font-body text-[10px] uppercase tracking-[0.3em] text-brand-choco mb-3">
-                                                WhatsApp
+                                            <label className="block font-body text-[20px] uppercase tracking-[0.3em] text-brand-choco mb-3">
+                                                Correo electronico
                                             </label>
                                             <input
-                                                type="tel"
-                                                placeholder="Tu número de contacto"
-                                                className="w-full bg-transparent border-b border-brand-choco/10 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/20 focus:border-brand-pink focus:outline-none transition-colors duration-300"
+                                                type="email"
+                                                placeholder="Tu correo electronico"
+                                                className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
                                                 style={{ fontFamily: 'system-ui, sans-serif' }}
                                             />
                                         </div>
@@ -155,17 +152,16 @@ export const CustomOrders = () => {
                                     {/* ROW 2 — Date + Occasion: Pill selectors */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                                         <div>
-                                            <label className="block font-body text-[10px] uppercase tracking-[0.3em] text-brand-choco mb-3">
+                                            <label className="block font-body text-[20px] uppercase tracking-[0.3em] text-brand-choco mb-3">
                                                 Fecha del evento
                                             </label>
                                             <input
                                                 type="date"
-                                                className="w-full bg-transparent border-b border-brand-choco/10 pb-3 font-body text-base text-brand-choco focus:border-brand-pink focus:outline-none transition-colors duration-300"
-                                                style={{ fontFamily: 'system-ui, sans-serif', colorScheme: 'light' }}
+                                                className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block font-body text-[10px] uppercase tracking-[0.3em] text-brand-choco mb-4">
+                                            <label className="block font-body text-[20px] uppercase tracking-[0.3em] text-brand-choco mb-4">
                                                 Ocasión
                                             </label>
                                             <div className="flex flex-wrap gap-2">
@@ -177,7 +173,7 @@ export const CustomOrders = () => {
                                                         onClick={() => setSelectedOccasion(selectedOccasion === option ? null : option)}
                                                         className={`px-4 py-2 rounded-full font-body text-xs tracking-wide transition-all duration-300 border cursor-pointer ${selectedOccasion === option
                                                             ? 'bg-brand-choco text-white border-brand-choco'
-                                                            : 'bg-transparent text-brand-choco/50 border-brand-choco/10 hover:border-brand-choco/30 hover:text-brand-choco/80'
+                                                            : 'bg-transparent text-brand-choco/80 border-brand-choco/50 hover:border-brand-choco/30 hover:text-brand-choco/80'
                                                             }`}
                                                     >
                                                         {option}
@@ -190,7 +186,7 @@ export const CustomOrders = () => {
                                     {/* ROW 3 — Guests + Description */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                                         <div>
-                                            <label className="block font-body text-[10px] uppercase tracking-[0.3em] text-brand-choco mb-4">
+                                            <label className="block font-body text-[20px] uppercase tracking-[0.3em] text-brand-choco mb-4">
                                                 Invitados
                                             </label>
                                             <div className="flex gap-3">
@@ -202,7 +198,7 @@ export const CustomOrders = () => {
                                                         onClick={() => setSelectedGuests(selectedGuests === option ? null : option)}
                                                         className={`flex-1 py-3 rounded-xl font-body text-xs tracking-wide transition-all duration-300 border cursor-pointer ${selectedGuests === option
                                                             ? 'bg-brand-choco text-white border-brand-choco shadow-lg'
-                                                            : 'bg-transparent text-brand-choco/50 border-brand-choco/10 hover:border-brand-choco/30'
+                                                            : 'bg-transparent text-brand-choco/80 border-brand-choco/50 hover:border-brand-choco/30'
                                                             }`}
                                                         style={{ fontFamily: 'system-ui, sans-serif' }}
                                                     >
@@ -212,20 +208,20 @@ export const CustomOrders = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="block font-body text-[10px] uppercase tracking-[0.3em] text-brand-choco mb-3">
+                                            <label className="block font-body text-[20px] uppercase tracking-[0.3em] text-brand-choco mb-3">
                                                 Cuéntanos tu idea
                                             </label>
                                             <textarea
                                                 rows={4}
                                                 placeholder="Describe el diseño, sabores, colores o temática que imaginas..."
-                                                className="w-full bg-transparent border-b border-brand-choco/10 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/20 focus:border-brand-pink focus:outline-none transition-colors duration-300 resize-none"
+                                                className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 placeholder:font-sans focus:border-brand-pink focus:outline-none transition-colors duration-300 resize-none"
                                             />
                                         </div>
                                     </div>
 
                                     {/* ROW 4 — Image Upload: Editorial style */}
                                     <div>
-                                        <label className="block font-body text-[10px] uppercase tracking-[0.3em] text-brand-choco mb-4">
+                                        <label className="block font-body text-[20px] uppercase tracking-[0.3em] text-brand-choco mb-4">
                                             Imagen de referencia
                                         </label>
 
@@ -266,14 +262,14 @@ export const CustomOrders = () => {
                                                     exit={{ opacity: 0, y: -10 }}
                                                     className="group flex items-center gap-6 cursor-pointer w-fit"
                                                 >
-                                                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl border-2 border-dashed border-brand-choco/10 flex items-center justify-center group-hover:border-brand-pink group-hover:bg-brand-pink/5 transition-all duration-500">
-                                                        <ImageIcon size={24} className="text-brand-choco/20 group-hover:text-brand-pink/60 transition-colors duration-500" />
+                                                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl border-2 border-dashed border-brand-choco/50 flex items-center justify-center group-hover:border-brand-pink group-hover:bg-brand-pink/5 transition-all duration-500">
+                                                        <ImageIcon size={24} className="text-brand-choco/50 group-hover:text-brand-pink/60 transition-colors duration-500" />
                                                     </div>
                                                     <div className="flex flex-col gap-1">
                                                         <span className="font-body text-sm text-brand-choco/60 group-hover:text-brand-choco transition-colors duration-300">
                                                             Sube una foto de inspiración
                                                         </span>
-                                                        <span className="text-[10px] text-brand-choco/30" style={{ fontFamily: 'system-ui, sans-serif' }}>
+                                                        <span className="text-[10px] text-brand-choco/70" style={{ fontFamily: 'system-ui, sans-serif' }}>
                                                             JPG, PNG o WEBP · Máx 10 MB
                                                         </span>
                                                     </div>
@@ -290,20 +286,16 @@ export const CustomOrders = () => {
                                     </div>
 
                                     {/* SUBMIT */}
-                                    <div className="flex flex-col items-start gap-4 pt-4">
+                                    <div className="flex flex-col items-center gap-4 pt-4">
                                         <motion.button
                                             type="submit"
                                             whileHover={{ x: 6 }}
                                             whileTap={{ scale: 0.98 }}
-                                            className="group inline-flex items-center gap-4 font-body text-sm uppercase tracking-[0.25em] text-brand-choco hover:text-brand-pink transition-colors duration-300 cursor-pointer"
+                                            className="group inline-flex items-center gap-4 font-body text-md uppercase tracking-[0.25em] text-brand-choco hover:text-brand-pink transition-colors duration-300 cursor-pointer"
                                         >
                                             Solicitar Cotización
-                                            <span className="w-12 h-px bg-brand-choco group-hover:bg-brand-pink group-hover:w-16 transition-all duration-300" />
-                                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+                                            <ArrowRight size={16} className="group-hover:translate-x-4 transition-transform duration-300" />
                                         </motion.button>
-                                        <p className="text-[10px] text-brand-choco/30 tracking-wide" style={{ fontFamily: 'system-ui, sans-serif' }}>
-                                            Te responderemos en menos de 24 horas vía WhatsApp
-                                        </p>
                                     </div>
                                 </form>
                             </motion.div>
