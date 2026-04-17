@@ -1,7 +1,4 @@
-'use client'
-import Link from 'next/link';
 import { Facebook, Instagram } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const WhatsAppIcon = ({ size = 20 }: { size?: number }) => (
     <svg
@@ -42,18 +39,16 @@ export const Footer = () => {
                     <p className="font-body text-xs text-brand-choco/70 tracking-tight">Síguenos en Redes Sociales</p>
                     <div className="flex gap-6">
                         {socialLinks.map((social) => (
-                            <motion.a
+                            <a
                                 key={social.label}
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                whileHover={{ y: -4, scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
                                 className="text-brand-choco/60 hover:text-brand-pink transition-colors duration-300"
                                 aria-label={social.label}
                             >
                                 <social.icon size={20} />
-                            </motion.a>
+                            </a>
                         ))}
                     </div>
                 </div>

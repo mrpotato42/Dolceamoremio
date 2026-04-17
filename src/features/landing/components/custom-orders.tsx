@@ -23,7 +23,12 @@ const GUESTS_OPTIONS = [
     '100+',
 ];
 
-export const CustomOrders = () => {
+interface CustomOrdersProps {
+    id?: string;
+    className?: string;
+}
+
+export const CustomOrders = ({ id = "servicios", className = '' }: CustomOrdersProps) => {
     const [isInterested, setIsInterested] = useState(false);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [selectedOccasion, setSelectedOccasion] = useState<string | null>(null);
@@ -45,7 +50,7 @@ export const CustomOrders = () => {
     };
 
     return (
-        <section id="servicios" className="relative w-full py-32 md:py-40 overflow-hidden">
+        <section id={id} className={`relative w-full py-32 md:py-40 overflow-hidden ${className}`}>
             {/* Subtle background texture */}
             <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-white to-brand-bg" />
             <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, var(--color-brand-choco) 1px, transparent 0)', backgroundSize: '48px 48px' }} />

@@ -4,13 +4,18 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-const CatalogCTA = () => {
+interface CatalogCTAProps {
+    id?: string;
+    className?: string;
+}
+
+const CatalogCTA = ({ id, className = '' }: CatalogCTAProps) => {
     return (
-        <section className="relative w-full bg-white py-32 md:py-48 lg:py-60 flex flex-col items-center justify-center overflow-hidden">
-            {/* Background Texture (Extreme minimalism) */}
+        <section id={id} className={`relative w-full bg-white py-32 md:py-48 lg:py-60 flex flex-col items-center justify-center overflow-hidden ${className}`}>
+            {/* Background Texture (Extreme minimalism) 
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none select-none overflow-hidden flex items-center justify-center">
                 <span className="font-title text-[40vw] text-brand-choco leading-none whitespace-nowrap -rotate-6">Dolce Amore Mio</span>
-            </div>
+            </div>*/}
 
             <div className="relative z-10 w-full max-w-[1200px] px-6 flex flex-col items-center">
                 {/* Minimalist Heading */}
