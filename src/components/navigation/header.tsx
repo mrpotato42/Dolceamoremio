@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShoppingBag } from 'lucide-react';
 
 export const Header = () => {
@@ -13,14 +14,21 @@ export const Header = () => {
 
                 {/* Center: Logo */}
                 <Link href='/' className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
-                    <motion.img
+                    <motion.div
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        src='/logo.webp'
-                        alt='Dolce AmoreMio Logo'
-                        className='h-8 w-auto object-contain md:h-10 cursor-pointer'
-                    />
+                        className='cursor-pointer flex items-center justify-center'
+                    >
+                        <Image
+                            src='/logo.webp'
+                            alt='Dolce AmoreMio Logo'
+                            width={160}
+                            height={40}
+                            className='h-8 w-auto object-contain md:h-10'
+                            priority
+                        />
+                    </motion.div>
                 </Link>
 
                 {/* Right: Shopping Bag */}
