@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import { ProductInfoCard, ProductInfoCardProps } from '@/features/landing/components/product-info-card';
@@ -114,14 +115,14 @@ const EditorialItem = ({ section, index }: { section: EditorialSection; index: n
                     transformOrigin: section.focus || 'center'
                 }}
             >
-                <img
+                <Image
                     src={section.image}
                     alt={section.alt}
-                    className="h-full w-full object-cover grayscale-[0.2] hover:grayscale-0 transition-[filter] duration-1000"
-                    style={{
-                        objectPosition: section.focus || 'center',
-                    }}
-                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fill
+                    priority={index === 0}
+                    sizes="100vw"
+                    className="object-cover grayscale-[0.2] hover:grayscale-0 transition-[filter] duration-1000"
+                    style={{ objectPosition: section.focus || 'center' }}
                 />
                 {/* Visual texture/overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
