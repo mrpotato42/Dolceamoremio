@@ -44,7 +44,7 @@ export const AboutHero = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-                    className="relative w-full aspect-[4/5] md:aspect-square lg:aspect-[3/4] rounded-[2rem] overflow-hidden"
+                    className="relative w-full aspect-4/5 md:aspect-square lg:aspect-3/4 rounded-4xl overflow-hidden"
                 >
                     <Image 
                         src="/landing2.webp" 

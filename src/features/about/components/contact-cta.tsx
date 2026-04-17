@@ -48,7 +48,7 @@ export const ContactCTA = () => {
                             Contáctanos
                         </span>
 
-                        <div className="bg-brand-soft text-brand-choco p-3 rounded-full transition-transform duration-500 group-hover:bg-brand-pink group-hover:text-white group-hover:rotate-[-45deg] z-10">
+                        <div className="bg-brand-soft text-brand-choco p-3 rounded-full transition-transform duration-500 group-hover:bg-brand-pink group-hover:text-white group-hover:-rotate-45 z-10">
                             <ArrowRight size={20} strokeWidth={2.5} />
                         </div>
                     </Link>

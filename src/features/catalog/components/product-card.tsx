@@ -3,8 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import { type Product, formatPrice } from '@/lib/data/products';
+import { useCartStore } from '@/stores/use-cart-store';
 
 interface ProductCardProps {
     product: Product;
@@ -12,6 +13,13 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, index }: ProductCardProps) => {
+    const addItem = useCartStore((state) => state.addItem);
+
+    const handleQuickAdd = (e: React.MouseEvent) => {
+        e.preventDefault(); // Prevent Link navigation
+        addItem(product);
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -23,9 +31,9 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
             }}
             className="group flex flex-col h-full"
         >
-            <Link href={`/catalog/products/${product.slug}`} className="flex flex-col h-full block cursor-pointer">
+            <Link href={`/catalog/products/${product.slug}`} className="flex flex-col h-full cursor-pointer">
                 {/* Image Container */}
-                <div className="relative w-full aspect-[4/5] rounded-2xl md:rounded-3xl overflow-hidden bg-brand-soft/20 mb-6 relative">
+                <div className="relative w-full aspect-4/5 rounded-2xl md:rounded-3xl overflow-hidden bg-brand-soft/20 mb-6">
                     <Image
                         src={product.image}
                         alt={product.name}
@@ -44,10 +52,14 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                         </div>
                     )}
 
-                    {/* Quick Action Icon */}
-                    <div className="absolute bottom-4 right-4 bg-white text-brand-choco w-12 h-12 rounded-full flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out shadow-lg">
-                        <ArrowUpRight size={20} strokeWidth={2.5} />
-                    </div>
+                    {/* Quick Add Button */}
+                    <button 
+                        onClick={handleQuickAdd}
+                        className="absolute bottom-4 right-4 bg-white text-brand-choco w-12 h-12 rounded-full flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out shadow-lg hover:bg-brand-pink hover:text-white"
+                        aria-label="Agregar al carrito"
+                    >
+                        <ShoppingBag size={20} strokeWidth={2} />
+                    </button>
                 </div>
 
                 {/* Content */}

@@ -15,7 +15,7 @@ interface TabItem {
 const TABS: TabItem[] = [
     { label: 'Inicio', href: '/', icon: Home },
     { label: 'Catálogo', href: '/catalog', icon: Cake },
-    { label: 'Carrito', href: '/#carrito', icon: ShoppingCart },
+    { label: 'Carrito', href: '/checkout', icon: ShoppingCart },
     { label: 'Servicios', href: '/#servicios', icon: Sparkles },
     { label: 'Acerca de', href: '/about', icon: Heart },
 ];
@@ -37,7 +37,7 @@ export const TapBar = () => {
             aria-label='Navegación principal'
         >
             {/* Subtle top divider */}
-            <div className='h-px bg-gradient-to-r from-transparent via-brand-choco/8 to-transparent' />
+            <div className='h-px bg-linear-to-r from-transparent via-brand-choco/8 to-transparent' />
 
             <div className='flex items-center justify-around bg-brand-bg/80 backdrop-blur-2xl px-4 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]'>
                 {TABS.map((tab) => {

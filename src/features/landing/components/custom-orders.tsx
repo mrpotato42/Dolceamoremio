@@ -17,7 +17,7 @@ export const CustomOrders = ({ id = "servicios", className = '' }: CustomOrdersP
     return (
         <section id={id} className={`relative w-full py-32 md:py-40 overflow-hidden ${className}`}>
             {/* Subtle background texture */}
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-white to-brand-bg" />
+            <div className="absolute inset-0 bg-linear-to-b from-brand-bg via-white to-brand-bg" />
             <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, var(--color-brand-choco) 1px, transparent 0)', backgroundSize: '48px 48px' }} />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12">
@@ -48,12 +48,12 @@ export const CustomOrders = ({ id = "servicios", className = '' }: CustomOrdersP
                             bg-brand-choco text-white hover:bg-brand-pink cursor-pointer
                             ${isInterested
                                 ? 'w-16 h-16 md:w-20 md:h-20 rounded-full justify-center p-0'
-                                : 'w-full max-w-md justify-between px-8 md:px-12 py-8 md:py-10 rounded-2xl md:rounded-[2rem]'}
+                                : 'w-full max-w-md justify-between px-8 md:px-12 py-8 md:py-10 rounded-2xl md:rounded-4xl'}
                         `}
                         transition={{ layout: { type: "spring", stiffness: 400, damping: 30 } }}
                     >
                         {/* Shimmer / Hover background effect */}
-                        <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
+                        <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
 
                         <AnimatePresence mode="popLayout">
                             {!isInterested && (
