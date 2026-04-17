@@ -30,7 +30,7 @@ interface EditorialSection {
 /** Define your sections here — add or remove as needed */
 const SECTIONS: EditorialSection[] = [
     {
-        image: '/landing1.JPG',
+        image: '/landing1.webp',
         alt: 'Selección de cupcakes y brownies artesanales',
         productId: '01',
         focus: '50% 100%',
@@ -43,7 +43,7 @@ const SECTIONS: EditorialSection[] = [
         },
     },
     {
-        image: '/landing3.JPG',
+        image: '/landing3.webp',
         alt: 'Postres en vasito con frutos rojos',
         productId: '02',
         focus: '70% 90%',
@@ -56,7 +56,7 @@ const SECTIONS: EditorialSection[] = [
         },
     },
     {
-        image: '/landing2.JPG',
+        image: '/landing2.webp',
         alt: 'Torta personalizada de chocolate y macarons',
         productId: '03',
         focus: '65% 70%',
@@ -160,7 +160,12 @@ const EditorialItem = ({ section, index }: { section: EditorialSection; index: n
     );
 };
 
-export const EditorialGallery = () => {
+interface EditorialGalleryProps {
+    id?: string;
+    className?: string;
+}
+
+export const EditorialGallery = ({ id, className = '' }: EditorialGalleryProps) => {
     const galleryRef = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
         target: galleryRef,
@@ -174,7 +179,7 @@ export const EditorialGallery = () => {
     });
 
     return (
-        <section ref={galleryRef} className="relative z-20 w-full bg-[#fafafa]">
+        <section id={id} ref={galleryRef} className={`relative z-20 w-full bg-[#fafafa] ${className}`}>
             {/* Gallery Navigation Progress Bar */}
             {/*<motion.div
                 className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-pink to-brand-coral z-50 origin-left"
