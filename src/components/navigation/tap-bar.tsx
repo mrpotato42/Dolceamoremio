@@ -17,7 +17,7 @@ const TABS: TabItem[] = [
     { label: 'Catálogo', href: '/catalog', icon: Cake },
     { label: 'Carrito', href: '/#carrito', icon: ShoppingCart },
     { label: 'Servicios', href: '/#servicios', icon: Sparkles },
-    { label: 'Acerca de', href: '/#sobre-nosotros', icon: Heart },
+    { label: 'Acerca de', href: '/about', icon: Heart },
 ];
 
 export const TapBar = () => {

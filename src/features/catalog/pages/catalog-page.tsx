@@ -1,16 +1,33 @@
 'use client';
 
-/**
- * Catalog Page Component
- * Centralizing all product display and filtering logic for the store.
- */
+import { motion } from 'framer-motion';
+import { CatalogGrid } from '../components/catalog-grid';
+
 export const CatalogPage = () => {
     return (
-        <div className="w-full flex-1 flex flex-col items-center justify-center py-40 md:py-60 px-6 text-center">
-            <h1 className="font-title text-7xl md:text-9xl text-brand-choco mb-6">Catálogo</h1>
-            <p className="font-body text-sm md:text-base text-brand-choco/60 tracking-[0.3em] uppercase">Estamos preparando nuestra vitrina digital completa</p>
-            
-            <div className="mt-20 w-4 h-[20vh] bg-brand-pink/20 rounded-full animate-bounce" />
+        <div className="w-full flex-1 flex flex-col pt-32 pb-20">
+            {/* Header Section */}
+            <div className="w-full text-center px-6 mb-12">
+                <motion.h1 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="font-title text-6xl md:text-8xl text-brand-choco mb-6"
+                >
+                    Catálogo
+                </motion.h1>
+                <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="font-body text-sm md:text-base text-brand-choco/60 tracking-[0.2em] uppercase max-w-xl mx-auto"
+                >
+                    Nuestra selección de repostería artesanal, diseñada con pasión y dedicación para tus mejores momentos.
+                </motion.p>
+            </div>
+
+            {/* Grid & Filters */}
+            <CatalogGrid />
         </div>
     );
 };
