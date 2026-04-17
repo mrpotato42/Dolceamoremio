@@ -27,30 +27,6 @@
   -webkit-mask-image: var(--mask-linear-b);
 }
 
-@font-face {
-  font-family: 'BakerTitle';
-  src: url('../assets/fonts/title.ttf') format('opentype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'BakerSubtitle';
-  src: url('../assets/fonts/subtitle.otf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'BakerBody';
-  src: url('../assets/fonts/body.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'BakerNumber';
-  src: url('../assets/fonts/numbers.ttf') format('truetype');
-  font-display: swap;
-}
-
 @keyframes float {
 
   0%,

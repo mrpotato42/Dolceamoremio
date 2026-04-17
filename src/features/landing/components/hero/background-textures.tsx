@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -39,10 +40,13 @@ export const BackgroundTextures = ({ textures }: Props) => {
                         transition={{ duration: 1, ease: 'easeInOut' }}
                         className='absolute inset-0 h-full w-full'
                     >
-                        <img
+                        <Image
                             src={textures[index]}
-                            className='h-full w-full object-cover grayscale-20 contrast-[1.3]'
                             alt='Pastry Texture'
+                            fill
+                            priority={index === 0}
+                            sizes="100vw"
+                            className='object-cover grayscale-20 contrast-130'
                         />
                         <div className='absolute inset-0 bg-linear-to-b from-brand-bg via-transparent to-transparent opacity-80' />
                     </motion.div>
