@@ -1,15 +1,14 @@
-import { SIGNATURE_COLLECTION, type Product } from '@/constants/Products';
+import { PRODUCTS, type Product } from '@/lib/data/products';
 
 /**
- * En el futuro, este servicio realizará llamadas a una API real (Express, Next.js API Routes, etc.)
- * Por ahora, abstrae el acceso a las constantes para que el componente no dependa de la implementación.
+ * Product service to abstract data fetching logic.
+ * Currenly uses local mock data but can be easily updated to hit an API.
  */
 export const getProducts = async (): Promise<Product[]> => {
-    // Simulamos una latencia de red si quieres, o simplemente retornamos los datos
-    return SIGNATURE_COLLECTION;
+    return PRODUCTS;
 };
 
-export const getProductById = async (id: string): Promise<Product | null> => {
-    const product = SIGNATURE_COLLECTION.find(p => p.id === id);
+export const getProductBySlug = async (slug: string): Promise<Product | null> => {
+    const product = PRODUCTS.find(p => p.slug === slug);
     return product || null;
 };

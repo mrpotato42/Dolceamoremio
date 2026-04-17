@@ -39,17 +39,17 @@ const CatalogCTA = ({ id, className = '' }: CatalogCTAProps) => {
                 >
                     <Link
                         href="/catalog"
-                        className="group relative flex items-center justify-between w-full bg-brand-choco text-white px-8 md:px-12 py-8 md:py-10 rounded-2xl md:rounded-[2rem] overflow-hidden transition-all duration-500 hover:bg-brand-pink hover:translate-y-[-4px] active:scale-95"
+                        className="group relative flex items-center justify-between w-full bg-brand-choco text-white px-8 md:px-12 py-8 md:py-10 rounded-2xl md:rounded-4xl overflow-hidden transition-all duration-500 hover:bg-brand-pink hover:translate-y-[-4px] active:scale-95"
                     >
                         {/* Shimmer / Hover background effect */}
-                        <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
+                        <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
 
                         <div className="relative z-10 flex flex-col items-start gap-1">
                             <span className="font-body text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-60">Explora la vitrina</span>
                             <span className="font-body text-xl md:text-2xl uppercase tracking-[0.2em] font-bold">Ver Todo</span>
                         </div>
 
-                        <div className="relative z-10 bg-white text-brand-choco p-4 rounded-full transition-transform duration-500 group-hover:rotate-[-45deg] group-hover:bg-brand-soft">
+                        <div className="relative z-10 bg-white text-brand-choco p-4 rounded-full transition-transform duration-500 group-hover:-rotate-45 group-hover:bg-brand-soft">
                             <ArrowRight size={24} strokeWidth={2.5} />
                         </div>
                     </Link>

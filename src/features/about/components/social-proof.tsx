@@ -42,7 +42,7 @@ export const SocialProof = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.6, delay: i * 0.1 }}
-                            className="bg-brand-soft/20 p-8 rounded-[2rem] flex flex-col justify-between"
+                            className="bg-brand-soft/20 p-8 rounded-4xl flex flex-col justify-between"
                         >
                             <p className="font-body text-brand-choco/70 italic text-lg leading-relaxed mb-8">
                                 "{t.quote}"

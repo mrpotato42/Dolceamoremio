@@ -56,7 +56,7 @@ export const OurTeam = () => {
                             transition={{ duration: 0.6, delay: 0.1 * index }}
                             className="flex flex-col items-center group cursor-pointer"
                         >
-                            <div className="relative w-full max-w-[300px] aspect-[3/4] mb-8 overflow-hidden rounded-[2rem] bg-brand-soft">
+                            <div className="relative w-full max-w-[300px] aspect-3/4 mb-8 overflow-hidden rounded-4xl bg-brand-soft">
                                 <Image
                                     src={member.image}
                                     alt={member.name}

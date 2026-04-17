@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { Header } from '@/components/navigation/header';
 import { TapBar } from '@/components/navigation/tap-bar';
 import { Footer } from '@/app/(landing)/_components/footer';
+import { CartDrawer } from '@/components/cart/cart-drawer';
 
 interface MainLayoutProps {
     children: ReactNode;
@@ -36,6 +37,9 @@ export function MainLayout({ children, showFooter = true }: MainLayoutProps) {
             {/* Fixed navigation elements (positioned outside overflow-hidden) */}
             <Header />
             <TapBar />
+            
+            {/* Global Overlays */}
+            <CartDrawer />
         </div>
     );
 }
