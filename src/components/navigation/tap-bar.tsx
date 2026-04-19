@@ -3,7 +3,7 @@
 import { Home, Cake, Sparkles, Heart, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 interface TabItem {
@@ -20,13 +20,15 @@ const TABS: TabItem[] = [
     { label: 'Acerca de', href: '/about', icon: Heart },
 ];
 
+const MotionLink = motion.create(Link);
+
 export const TapBar = () => {
     const pathname = usePathname();
-    const [hash, setHash] = useState('');
+    const [hash, setHash] = useState<string | null>(null);
 
     useEffect(() => {
-        setHash(window.location.hash);
-        const handleHashChange = () => setHash(window.location.hash);
+        setHash(window.location.hash || '');
+        const handleHashChange = () => setHash(window.location.hash || '');
         window.addEventListener('hashchange', handleHashChange);
         return () => window.removeEventListener('hashchange', handleHashChange);
     }, []);
@@ -40,52 +42,61 @@ export const TapBar = () => {
             <div className='h-px bg-linear-to-r from-transparent via-brand-choco/8 to-transparent' />
 
             <div className='flex items-center justify-around bg-brand-bg/80 backdrop-blur-2xl px-4 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]'>
-                {TABS.map((tab) => {
-                    const tabHash = tab.href.includes('#') ? tab.href.substring(tab.href.indexOf('#')) : '';
-                    const isActive = tabHash ? hash === tabHash : pathname === tab.href && !hash;
+                <LayoutGroup id='tap-bar-group'>
+                    {TABS.map((tab) => {
+                        const tabHash = tab.href.includes('#') ? tab.href.substring(tab.href.indexOf('#')) : '';
+                        
+                        // Solo activamos si el hash ya ha sido sincronizado (no es null)
+                        const isActive = hash !== null && (
+                            tabHash ? hash === tabHash : pathname === tab.href && (hash === '' || hash === '#')
+                        );
 
-                    return (
-                        <Link
-                            key={tab.label}
-                            href={tab.href}
-                            onClick={() => setHash(tabHash)}
-                            className={`group relative flex items-center justify-center gap-1.5 py-2 rounded-full transition-all duration-300 ${isActive ? 'px-4' : 'px-3'
-                                }`}
-                        >
-                            {/* Active indicator pill */}
-                            {isActive && (
-                                <motion.span
-                                    layoutId='tap-bar-active'
-                                    className='absolute inset-0 rounded-full bg-brand-pink/10'
-                                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                                />
-                            )}
-
-                            <tab.icon
-                                size={20}
-                                strokeWidth={isActive ? 2 : 1.5}
-                                className={`relative z-10 transition-colors duration-300 ${isActive
-                                    ? 'text-brand-pink'
-                                    : 'text-brand-choco/40 group-hover:text-brand-choco/70'
+                        return (
+                            <MotionLink
+                                layout
+                                key={tab.label}
+                                href={tab.href}
+                                onClick={() => setHash(tabHash)}
+                                transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                                className={`group relative flex items-center justify-center gap-1.5 py-2 rounded-full ${isActive ? 'px-4' : 'px-2'
                                     }`}
-                            />
-
-                            <AnimatePresence>
+                            >
+                                {/* Active indicator pill */}
                                 {isActive && (
                                     <motion.span
-                                        initial={{ width: 0, opacity: 0 }}
-                                        animate={{ width: 'auto', opacity: 1 }}
-                                        exit={{ width: 0, opacity: 0 }}
-                                        transition={{ duration: 0.25, ease: 'easeInOut' }}
-                                        className='relative z-10 overflow-hidden whitespace-nowrap text-[11px] font-body font-medium tracking-wider text-brand-pink'
-                                    >
-                                        {tab.label}
-                                    </motion.span>
+                                        layoutId='tap-bar-active'
+                                        className='absolute inset-0 rounded-full bg-brand-pink/10'
+                                        transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                                    />
                                 )}
-                            </AnimatePresence>
-                        </Link>
-                    );
-                })}
+
+                                <tab.icon
+                                    size={20}
+                                    strokeWidth={isActive ? 2 : 1.5}
+                                    className={`relative z-10 transition-colors duration-300 ${isActive
+                                        ? 'text-brand-pink'
+                                        : 'text-brand-choco/40 group-hover:text-brand-choco/70'
+                                        }`}
+                                />
+
+                                <AnimatePresence mode='popLayout'>
+                                    {isActive && (
+                                        <motion.span
+                                            layout
+                                            initial={{ width: 0, opacity: 0, scale: 0.8 }}
+                                            animate={{ width: 'auto', opacity: 1, scale: 1 }}
+                                            exit={{ width: 0, opacity: 0, scale: 0.8 }}
+                                            transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                                            className='relative z-10 overflow-hidden whitespace-nowrap text-[11px] font-body font-medium tracking-wider text-brand-pink origin-left'
+                                        >
+                                            {tab.label}
+                                        </motion.span>
+                                    )}
+                                </AnimatePresence>
+                            </MotionLink>
+                        );
+                    })}
+                </LayoutGroup>
             </div>
         </nav>
     );
