@@ -1,8 +1,5 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 import { type Product, formatPrice } from '@/lib/data/products';
 import { useCartStore } from '@/stores/use-cart-store';
@@ -12,7 +9,7 @@ interface ProductCardProps {
     index: number;
 }
 
-export const ProductCard = ({ product, index }: ProductCardProps) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
     const addItem = useCartStore((state) => state.addItem);
 
     const handleQuickAdd = (e: React.MouseEvent) => {
@@ -21,16 +18,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-                duration: 0.6, 
-                ease: [0.22, 1, 0.36, 1],
-                delay: index * 0.1 // Stagger effect
-            }}
-            className="group flex flex-col h-full"
-        >
+        <div className="group flex flex-col h-full">
             <Link href={`/catalog/products/${product.slug}`} className="flex flex-col h-full cursor-pointer">
                 {/* Image Container */}
                 <div className="relative w-full aspect-4/5 rounded-2xl md:rounded-3xl overflow-hidden bg-brand-soft/20 mb-6">
@@ -41,10 +29,10 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    
+
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-brand-choco/0 group-hover:bg-brand-choco/20 transition-colors duration-500" />
-                    
+
                     {/* Badge */}
                     {product.isFeatured && (
                         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
@@ -53,7 +41,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                     )}
 
                     {/* Quick Add Button */}
-                    <button 
+                    <button
                         onClick={handleQuickAdd}
                         className="absolute bottom-4 right-4 bg-white text-brand-choco w-12 h-12 rounded-full flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out shadow-lg hover:bg-brand-pink hover:text-white"
                         aria-label="Agregar al carrito"
@@ -77,7 +65,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                             {product.description}
                         </p>
                     </div>
-                    
+
                     <div className="mt-6 pt-4 border-t border-brand-choco/10">
                         <span className="font-body text-xs uppercase tracking-[0.2em] text-brand-choco/40">
                             {product.category}
@@ -85,6 +73,6 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                     </div>
                 </div>
             </Link>
-        </motion.div>
+        </div>
     );
 };
