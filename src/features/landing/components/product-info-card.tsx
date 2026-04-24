@@ -8,6 +8,7 @@ export interface ProductInfoCardProps {
     /** Where to position the card within its parent container */
     position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center-left' | 'center-right';
     className?: string;
+    onAdd?: (quantity: number) => void;
 }
 
 const positionClasses: Record<NonNullable<ProductInfoCardProps['position']>, string> = {
@@ -25,6 +26,7 @@ export const ProductInfoCard = ({
     price,
     position = 'bottom-right',
     className = '',
+    onAdd,
 }: ProductInfoCardProps) => {
     const [quantity, setQuantity] = useState(1);
 
@@ -78,22 +80,14 @@ export const ProductInfoCard = ({
 
                 {/* Add to cart button */}
                 <button
-                    className="
-                        group/cart relative w-full flex items-center justify-center gap-2
-                        py-2.5 rounded-xl
-                        bg-linear-to-r from-brand-pink to-brand-coral
-                        text-white font-body text-[10px] md:text-[11px] uppercase tracking-[0.15em]
-                        overflow-hidden
-                        transition-shadow duration-300
-                        hover:shadow-[0_4px_15px_rgba(235,93,141,0.3)]
-                        active:scale-[0.98]
-                    "
+                    onClick={() => onAdd?.(quantity)}
+                    className="group relative w-full flex items-center justify-center gap-2 bg-brand-choco text-white py-2.5 md:py-3 px-4 rounded-xl overflow-hidden transition-all duration-500 hover:bg-brand-pink hover:translate-y-[-2px] active:scale-95 shadow-lg"
                 >
-                    {/* Shimmer effect */}
-                    <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/cart:translate-x-full transition-transform duration-700 ease-in-out" />
-
-                    <span className="relative z-10">Agregar al pedido</span>
-                    <ShoppingBag size={14} strokeWidth={1.8} className="relative mb-px z-10 transition-transform duration-300 group-hover/cart:-translate-y-0.5" />
+                    <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
+                    <ShoppingBag size={15} className="relative z-10 shrink-0" />
+                    <span className="relative z-10 font-body text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] font-bold whitespace-nowrap">
+                        Agregar a la bolsa
+                    </span>
                 </button>
             </div>
         </div>
