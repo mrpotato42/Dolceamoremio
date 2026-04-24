@@ -66,10 +66,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                         </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-brand-choco/10">
-                        <span className="font-body text-xs uppercase tracking-[0.2em] text-brand-choco/40">
-                            {product.category}
-                        </span>
+                    <div className="mt-6 border-brand-choco/10">
+                        <button
+                            onClick={handleQuickAdd}
+                            className="group relative w-full flex items-center justify-center gap-3 bg-brand-choco text-white py-4 px-6 rounded-xl md:rounded-2xl overflow-hidden transition-all duration-500 hover:bg-brand-pink hover:translate-y-[-2px] active:scale-95 shadow-lg"
+                        >
+                            <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
+                            <ShoppingBag size={18} className="relative z-10" />
+                            <span className="relative z-10 font-body text-xs uppercase tracking-[0.2em] font-bold">
+                                Agregar a la bolsa
+                            </span>
+                        </button>
                     </div>
                 </div>
             </Link>

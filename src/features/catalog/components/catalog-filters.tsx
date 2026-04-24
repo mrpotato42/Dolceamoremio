@@ -18,7 +18,7 @@ export const CatalogFilters = ({ categories, selectedCategory, onSelectCategory 
 
                 {/* Contenedor con scroll */}
                 <div
-                    className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6"
+                    className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6 pt-2"
                 >
                     <div className="flex items-center gap-3 md:gap-4 px-[calc(50vw-65px)] md:px-12 min-w-max">
                         {categories.map((category) => (

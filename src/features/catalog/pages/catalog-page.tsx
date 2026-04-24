@@ -4,7 +4,7 @@ export const CatalogPage = () => {
     return (
         <div className="w-full flex-1 flex flex-col pt-32 pb-20">
             {/* Header Section */}
-            <div className="w-full text-center px-6 mb-12">
+            <div className="w-full text-center px-6">
                 <h1 className="font-title text-6xl md:text-8xl text-brand-choco mb-6">
                     Catálogo
                 </h1>
