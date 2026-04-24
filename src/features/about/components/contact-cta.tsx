@@ -4,18 +4,40 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
+const BACKGROUND_STAMPS = [
+    { top: '-5%', left: '-10%', size: '18vw', rotate: '-rotate-12' },
+    { top: '25%', right: '-15%', size: '12vw', rotate: 'rotate-6' },
+    { bottom: '10%', left: '5%', size: '15vw', rotate: '-rotate-3' },
+    { top: '55%', left: '-20%', size: '22vw', rotate: 'rotate-12' },
+    { top: '-15%', right: '5%', size: '10vw', rotate: '-rotate-6' },
+    { bottom: '-10%', right: '10%', size: '20vw', rotate: '-rotate-12' },
+];
+
 export const ContactCTA = () => {
     return (
-        <section className="relative w-full h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-choco">
-            
-            {/* Background Texture/Image */}
-            <div className="absolute inset-0 opacity-40 mix-blend-overlay">
-                <div className="w-full h-full bg-[url('/landing3.webp')] bg-cover bg-center" />
-                <div className="absolute inset-0 bg-brand-choco/80" />
+        <section className="relative w-full h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-choco text-white">
+
+            {/* Background Texture (Scattered stamps moved from Catalog) */}
+            <div className="absolute inset-0 opacity-[0.15] pointer-events-none select-none overflow-hidden">
+                {BACKGROUND_STAMPS.map((stamp, index) => (
+                    <span
+                        key={index}
+                        className={`absolute font-title text-white/50 leading-none whitespace-nowrap mix-blend-overlay ${stamp.rotate}`}
+                        style={{
+                            top: stamp.top,
+                            left: stamp.left,
+                            right: stamp.right,
+                            bottom: stamp.bottom,
+                            fontSize: stamp.size
+                        }}
+                    >
+                        Dolce Amore Mio
+                    </span>
+                ))}
             </div>
 
             <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl">
-                <motion.span 
+                <motion.span
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -24,7 +46,7 @@ export const ContactCTA = () => {
                     Hagamos magia
                 </motion.span>
 
-                <motion.h2 
+                <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

@@ -10,13 +10,15 @@ import { useEffect, useState } from 'react';
 export const Header = () => {
     const [mounted, setMounted] = useState(false);
     const toggleCart = useCartStore((state) => state.toggleCart);
-    const getTotalItems = useCartStore((state) => state.getTotalItems);
+    const totalItemsCount = useCartStore((state) => 
+        state.items.reduce((acc, item) => acc + item.quantity, 0)
+    );
     
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    const totalItems = mounted ? getTotalItems() : 0;
+    const totalItems = mounted ? totalItemsCount : 0;
 
     return (
         <header className='fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-full md:max-w-3xl lg:max-w-5xl xl:max-w-[1440px]'>

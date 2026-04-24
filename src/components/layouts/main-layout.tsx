@@ -3,6 +3,7 @@ import { Header } from '@/components/navigation/header';
 import { TapBar } from '@/components/navigation/tap-bar';
 import { Footer } from '@/app/(landing)/_components/footer';
 import { CartDrawer } from '@/components/cart/cart-drawer';
+import { Toast } from '@/components/ui/toast';
 
 interface MainLayoutProps {
     children: ReactNode;
@@ -40,6 +41,7 @@ export function MainLayout({ children, showFooter = true }: MainLayoutProps) {
             
             {/* Global Overlays */}
             <CartDrawer />
+            <Toast />
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Product } from '@/lib/data/products';
+import { useToastStore } from './use-toast-store';
 
 export interface CartItem extends Product {
     quantity: number;
@@ -41,13 +42,14 @@ export const useCartStore = create<CartState>()(
                         if (instructions) {
                             newItems[existingItemIndex].specialInstructions = instructions;
                         }
-                        return { items: newItems, isOpen: true }; // Auto-open cart on add
+                        useToastStore.getState().showToast("Producto añadido", "cart");
+                        return { items: newItems };
                     }
                     
                     // Add new item
+                    useToastStore.getState().showToast("Producto añadido", "cart");
                     return { 
-                        items: [...state.items, { ...product, quantity, specialInstructions: instructions }],
-                        isOpen: true // Auto-open cart on add
+                        items: [...state.items, { ...product, quantity, specialInstructions: instructions }]
                     };
                 });
             },
