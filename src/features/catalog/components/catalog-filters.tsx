@@ -8,7 +8,7 @@ interface CatalogFiltersProps {
 
 export const CatalogFilters = ({ categories, selectedCategory, onSelectCategory }: CatalogFiltersProps) => {
     return (
-        <div className="w-full mb-10 md:mb-16">
+        <div className="w-full mb-0 md:mb-16">
             <div className="relative">
                 {/* Degradado Izquierdo */}
                 <div className="absolute left-0 top-0 bottom-0 w-10 md:w-24 z-20 pointer-events-none bg-gradient-to-r from-brand-bg via-brand-bg/80 to-transparent" />
@@ -18,7 +18,7 @@ export const CatalogFilters = ({ categories, selectedCategory, onSelectCategory 
 
                 {/* Contenedor con scroll */}
                 <div
-                    className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6"
+                    className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6 -mb-4 pt-2"
                 >
                     <div className="flex items-center gap-3 md:gap-4 px-[calc(50vw-65px)] md:px-12 min-w-max">
                         {categories.map((category) => (

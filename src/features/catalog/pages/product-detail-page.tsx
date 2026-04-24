@@ -18,7 +18,7 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
-    
+
     const addItem = useCartStore((state) => state.addItem);
 
     useEffect(() => {
@@ -69,14 +69,14 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    
+
                     {/* Visual Section */}
                     <FadeIn direction="right" distance={30}>
                         <div className="relative aspect-4/5 rounded-[2.5rem] overflow-hidden bg-brand-soft/20 group shadow-2xl">
-                            <Image 
-                                src={product.image} 
-                                alt={product.name} 
-                                fill 
+                            <Image
+                                src={product.image}
+                                alt={product.name}
+                                fill
                                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
                                 priority
                             />
@@ -112,7 +112,7 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
                                 <div className="flex items-start gap-4">
                                     <Sparkles className="text-brand-pink shrink-0" size={20} />
                                     <div className="flex flex-col">
-                                        <span className="font-body text-xs font-bold text-brand-choco uppercase tracking-wider">100% Artesanal</span>
+                                        <span className="font-body text-xs font-bold text-brand-choco uppercase tracking-wider"><span className="font-number">100%</span> Artesanal</span>
                                         <span className="font-body text-[10px] text-brand-choco/50">Hecho con pasión</span>
                                     </div>
                                 </div>
@@ -131,14 +131,14 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
                             <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
                                 {/* Quantity Selector */}
                                 <div className="flex items-center justify-between border border-brand-choco/20 rounded-xl p-2 min-w-[140px] bg-white/50">
-                                    <button 
+                                    <button
                                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
                                         className="w-10 h-10 flex items-center justify-center text-brand-choco/50 hover:text-brand-choco transition-colors"
                                     >
                                         <Minus size={18} />
                                     </button>
-                                    <span className="font-body font-bold text-brand-choco">{quantity}</span>
-                                    <button 
+                                    <span className="font-number font-bold text-brand-choco">{quantity}</span>
+                                    <button
                                         onClick={() => setQuantity(quantity + 1)}
                                         className="w-10 h-10 flex items-center justify-center text-brand-choco/50 hover:text-brand-choco transition-colors"
                                     >
@@ -147,7 +147,7 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
                                 </div>
 
                                 {/* Add to Cart */}
-                                <button 
+                                <button
                                     onClick={handleAddToCart}
                                     className="flex-1 group flex items-center justify-center gap-3 bg-brand-choco text-white py-4 px-8 rounded-xl hover:bg-brand-pink transition-all duration-300 shadow-xl hover:shadow-brand-pink/20 active:scale-[0.98]"
                                 >
