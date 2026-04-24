@@ -53,7 +53,7 @@ export const CustomOrderForm = () => {
                     <input
                         type="text"
                         placeholder="Tu nombre completo"
-                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
+                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-sans text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
                     />
                 </div>
                 <div className="group">
@@ -63,8 +63,7 @@ export const CustomOrderForm = () => {
                     <input
                         type="email"
                         placeholder="Tu correo electronico"
-                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
-                        style={{ fontFamily: 'system-ui, sans-serif' }}
+                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-sans text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
                     />
                 </div>
             </div>
@@ -77,7 +76,7 @@ export const CustomOrderForm = () => {
                     </label>
                     <input
                         type="date"
-                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300"
+                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-sans text-base text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300"
                     />
                 </div>
                 <div>
@@ -134,7 +133,7 @@ export const CustomOrderForm = () => {
                     <textarea
                         rows={4}
                         placeholder="Describe el diseño, sabores, colores o temática que imaginas..."
-                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 placeholder:font-sans focus:border-brand-pink focus:outline-none transition-colors duration-300 resize-none"
+                        className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-sans text-base text-brand-choco placeholder:text-brand-choco/40 placeholder:font-sans focus:border-brand-pink focus:outline-none transition-colors duration-300 resize-none"
                     />
                 </div>
             </div>
