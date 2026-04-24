@@ -25,8 +25,8 @@ export const Footer = () => {
     ];
 
     return (
-        <footer className="w-full bg-transparent pt-16 pb-24 px-6 md:px-12 flex flex-col items-center">
-            <div className="w-full max-w-7xl flex flex-col md:flex-row justify-between items-center gap-12 border-t border-brand-choco/10">
+        <footer className="w-full bg-transparent pt-8 pb-24 px-6 md:px-12 flex flex-col items-center">
+            <div className="w-full max-w-7xl flex flex-col md:flex-row justify-between items-center gap-12 border-t border-brand-choco/10 pt-12">
 
                 {/* Brand Side */}
                 <div className="flex flex-col items-center md:items-start gap-4">
@@ -56,7 +56,7 @@ export const Footer = () => {
 
             <div className="mt-8 flex flex-col items-center gap-2">
                 <p className="font-body text-[9px] uppercase tracking-[0.4em] text-brand-choco/30">
-                    &copy; {year} Dolce Amore Mio — Todos los derechos reservados.
+                    &copy; <span className="font-number">{year}</span> Dolce Amore Mio — Todos los derechos reservados.
                 </p>
             </div>
         </footer>

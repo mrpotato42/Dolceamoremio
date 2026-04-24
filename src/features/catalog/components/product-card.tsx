@@ -21,7 +21,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <div className="group flex flex-col h-full">
             <Link href={`/catalog/products/${product.slug}`} className="flex flex-col h-full cursor-pointer">
                 {/* Image Container */}
-                <div className="relative w-full aspect-4/5 rounded-2xl md:rounded-3xl overflow-hidden bg-brand-soft/20 mb-6">
+                <div className="relative w-full aspect-square rounded-2xl md:rounded-3xl overflow-hidden bg-brand-soft/20 mb-6">
                     <Image
                         src={product.image}
                         alt={product.name}
