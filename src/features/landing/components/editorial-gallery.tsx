@@ -4,6 +4,8 @@ import Image from 'next/image';
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import { ProductInfoCard, ProductInfoCardProps } from '@/features/landing/components/product-info-card';
+import { useCartStore } from '@/stores/use-cart-store';
+import { type Product } from '@/lib/data/products';
 
 /** Configuration for each editorial section */
 interface EditorialSection {
@@ -75,6 +77,20 @@ const SECTIONS: EditorialSection[] = [
 const EditorialItem = ({ section, index }: { section: EditorialSection; index: number }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const shouldReduceMotion = useReducedMotion();
+    const addItem = useCartStore((state) => state.addItem);
+
+    const handleAdd = (quantity: number) => {
+        const mockProduct: Product = {
+            id: `editorial-${section.productId}`,
+            name: section.product.title,
+            description: section.product.description,
+            price: section.product.price,
+            category: 'Eventos Especiales',
+            image: section.image,
+            slug: `editorial-${section.productId}`,
+        };
+        addItem(mockProduct, quantity);
+    };
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -154,6 +170,7 @@ const EditorialItem = ({ section, index }: { section: EditorialSection; index: n
                         description={section.product.description}
                         price={section.product.price}
                         position={section.product.position}
+                        onAdd={handleAdd}
                     />
                 </div>
             </motion.div>

@@ -1,7 +1,7 @@
 import { HeroSection } from '@/features/landing/components/hero/hero-section';
 import { EditorialGallery } from '@/features/landing/components/editorial-gallery';
 import { Catalog } from '@/features/landing/components/catalog';
-import { AboutUs } from '@/features/landing/components/about-us';
+// import { AboutUs } from '@/features/landing/components/about-us';
 import { CustomOrders } from '@/features/landing/components/custom-orders';
 
 export default function Home() {
