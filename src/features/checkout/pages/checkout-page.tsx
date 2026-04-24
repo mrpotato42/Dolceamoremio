@@ -98,41 +98,41 @@ export const CheckoutPage = () => {
                         <form id="checkout-form" onSubmit={handleSubmit} className="flex flex-col gap-10">
                             {/* Section: Contacto */}
                             <div className="flex flex-col gap-6 p-8 bg-white/50 rounded-4xl border border-brand-choco/5">
-                                <h2 className="font-body text-xs uppercase tracking-[0.3em] text-brand-pink font-bold">1. Datos de Contacto</h2>
+                                <h2 className="font-body text-xs uppercase tracking-[0.3em] text-brand-pink font-bold"><span className="text-base font-number">1.</span> Datos de Contacto</h2>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Nombre completo</label>
-                                        <input required type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Ej. Ana García" />
+                                        <input required type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-sans text-brand-choco placeholder:text-brand-choco/30" placeholder="Ej. Ana García" />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Teléfono</label>
-                                        <input required type="tel" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="+57 300 000 0000" />
+                                        <input required type="tel" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-sans text-brand-choco placeholder:text-brand-choco/30" placeholder="+57 300 000 0000" />
                                     </div>
                                     <div className="flex flex-col gap-2 md:col-span-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Correo Electrónico</label>
-                                        <input required type="email" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="ana@ejemplo.com" />
+                                        <input required type="email" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-sans text-brand-choco placeholder:text-brand-choco/30" placeholder="ana@ejemplo.com" />
                                     </div>
                                 </div>
                             </div>
 
                             {/* Section: Entrega */}
                             <div className="flex flex-col gap-6 p-8 bg-white/50 rounded-4xl border border-brand-choco/5">
-                                <h2 className="font-body text-xs uppercase tracking-[0.3em] text-brand-pink font-bold">2. Entrega</h2>
+                                <h2 className="font-body text-xs uppercase tracking-[0.3em] text-brand-pink font-bold"><span className="text-base font-number">2.</span> Entrega</h2>
 
                                 <div className="grid grid-cols-1 gap-6">
                                     <div className="flex flex-col gap-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Dirección de envío</label>
-                                        <input required type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Calle 123 #45-67, Apto 801" />
+                                        <input required type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-sans text-brand-choco placeholder:text-brand-choco/30" placeholder="Calle 123 #45-67, Apto 801" />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="flex flex-col gap-2">
                                             <label className="font-body text-sm text-brand-choco/80 font-medium">Fecha de entrega</label>
-                                            <input required type="date" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco/60" />
+                                            <input required type="date" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-sans text-brand-choco/60" />
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <label className="font-body text-sm text-brand-choco/80 font-medium">Indicaciones especiales</label>
-                                            <input type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Dejar en portería, cuidado con alergias, etc." />
+                                            <input type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-sans text-brand-choco placeholder:text-brand-choco/30" placeholder="Dejar en portería, cuidado con alergias, etc." />
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@ export const CheckoutPage = () => {
                                         </div>
                                         <div className="flex flex-col flex-1 text-sm">
                                             <span className="font-body font-medium text-brand-choco">{item.name}</span>
-                                            <span className="font-body text-brand-choco/50">Cant: {item.quantity}</span>
+                                            <span className="font-number text-brand-choco/50">Cant: {item.quantity}</span>
                                             <span className="font-title text-brand-choco mt-1 font-bold">
                                                 {formatPrice(typeof item.price === 'string' ? (parseInt(item.price.replace(/\D/g, ''), 10)) * item.quantity : item.price * item.quantity)}
                                             </span>
@@ -171,11 +171,11 @@ export const CheckoutPage = () => {
                             <div className="flex flex-col gap-4 border-t border-brand-choco/10 pt-6 mb-8">
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="font-body text-brand-choco/60">Subtotal</span>
-                                    <span className="font-body font-medium text-brand-choco">{formatPrice(subtotal)}</span>
+                                    <span className="font-number font-medium text-brand-choco">{formatPrice(subtotal)}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="font-body text-brand-choco/60">Envío Local</span>
-                                    <span className="font-body font-medium text-brand-choco">{formatPrice(shipping)}</span>
+                                    <span className="font-number font-medium text-brand-choco">{formatPrice(shipping)}</span>
                                 </div>
                                 <div className="flex justify-between items-center mt-2 pt-4 border-t border-brand-choco/5">
                                     <span className="font-title text-xl text-brand-choco">Total</span>
