@@ -55,7 +55,7 @@ export const Footer = () => {
             </div>
 
             <div className="mt-8 flex flex-col items-center gap-2">
-                <p className="font-body text-[9px] uppercase tracking-[0.4em] text-brand-choco/30">
+                <p className="font-body text-[9px] uppercase tracking-[0.4em] text-brand-choco/30 text-center">
                     &copy; <span className="font-number">{year}</span> Dolce Amore Mio — Todos los derechos reservados.
                 </p>
             </div>

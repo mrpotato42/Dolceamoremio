@@ -29,6 +29,18 @@ export const CartDrawer = () => {
         return () => window.removeEventListener('keydown', handleEscape);
     }, [closeCart]);
 
+    // Prevent body scroll when drawer is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
     if (!mounted) return null;
 
     return (
@@ -42,7 +54,7 @@ export const CartDrawer = () => {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
                         onClick={closeCart}
-                        className="fixed inset-0 bg-brand-choco/20 backdrop-blur-sm z-100"
+                        className="fixed inset-0 z-100"
                         aria-hidden="true"
                     />
 
@@ -76,7 +88,7 @@ export const CartDrawer = () => {
                                     <p className="font-body text-base text-brand-choco">
                                         Tu bolsa visual está vacía.<br />¡Descubre nuestras creaciones!
                                     </p>
-                                    <button 
+                                    <button
                                         onClick={closeCart}
                                         className="font-body text-xs uppercase tracking-[0.2em] font-bold text-brand-pink mt-4 hover:underline"
                                     >
@@ -102,7 +114,7 @@ export const CartDrawer = () => {
                                 <p className="font-body text-xs text-brand-choco/50 mb-6 italic">
                                     Los costos de entrega se calculan en el siguiente paso.
                                 </p>
-                                
+
                                 <Link href="/checkout" onClick={closeCart}>
                                     <button className="group w-full flex items-center justify-center gap-3 bg-brand-choco text-white py-4 rounded-xl hover:bg-brand-pink transition-colors duration-300">
                                         <span className="font-body text-sm uppercase tracking-[0.2em] font-bold">

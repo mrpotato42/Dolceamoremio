@@ -57,7 +57,7 @@ export const CatalogGrid = () => {
             />
             {/* Pagination dots (Mobile only) */}
             {filteredProducts.length > 1 && (
-                <div className="flex justify-center items-center h-3 mb-6 md:hidden">
+                <div className="flex justify-center items-center h-3 mb-5 mt-6 md:hidden">
                     {filteredProducts.map((_, i) => {
                         const distance = Math.abs(i - centeredIndex);
                         const isVisible = distance <= 1;

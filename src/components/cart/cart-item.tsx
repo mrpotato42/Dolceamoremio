@@ -36,7 +36,7 @@ export const CartItem = ({ item }: CartItemProps) => {
                             {item.category}
                         </span>
                     </div>
-                    <button 
+                    <button
                         onClick={() => removeItem(item.id)}
                         className="text-brand-choco/40 hover:text-red-500 transition-colors p-1"
                         aria-label="Eliminar producto"
@@ -48,17 +48,17 @@ export const CartItem = ({ item }: CartItemProps) => {
                 <div className="flex justify-between items-end mt-4">
                     {/* Quantity Controls */}
                     <div className="flex items-center gap-3 bg-brand-soft/30 rounded-full px-3 py-1">
-                        <button 
+                        <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className="text-brand-choco/60 hover:text-brand-choco transition-colors p-1"
                             disabled={item.quantity <= 1}
                         >
                             <Minus size={14} />
                         </button>
-                        <span className="font-body text-sm font-medium text-brand-choco w-4 text-center">
+                        <span className="font-numbers text-sm font-medium text-brand-choco min-w-4 text-center">
                             {item.quantity}
                         </span>
-                        <button 
+                        <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="text-brand-choco/60 hover:text-brand-choco transition-colors p-1"
                         >
@@ -68,8 +68,8 @@ export const CartItem = ({ item }: CartItemProps) => {
 
                     {/* Price */}
                     <span className="font-title text-brand-choco text-lg">
-                        {formatPrice(typeof item.price === 'string' 
-                            ? (parseInt(item.price.replace(/\D/g, ''), 10) || 0) * item.quantity 
+                        {formatPrice(typeof item.price === 'string'
+                            ? (parseInt(item.price.replace(/\D/g, ''), 10) || 0) * item.quantity
                             : item.price * item.quantity)}
                     </span>
                 </div>
