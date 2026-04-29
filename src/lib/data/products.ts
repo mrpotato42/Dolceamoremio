@@ -92,7 +92,7 @@ export const PRODUCTS: Product[] = [
         price: 35000,
         category: 'Eventos Especiales',
         image: '/landing2.webp',
-    }
+    },
 ];
 
 export const formatPrice = (price: number | string) => {
