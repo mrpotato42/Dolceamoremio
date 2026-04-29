@@ -56,30 +56,28 @@ export const CatalogGrid = () => {
                 onSelectCategory={setSelectedCategory}
             />
             {/* Pagination dots (Mobile only) */}
-            {filteredProducts.length > 1 && (
-                <div className="flex justify-center items-center h-3 mb-5 mt-6 md:hidden">
-                    {filteredProducts.map((_, i) => {
-                        const distance = Math.abs(i - centeredIndex);
-                        const isVisible = distance <= 1;
-                        const isFocus = distance === 0;
+            <div className="flex justify-center items-center h-3 mb-5 mt-6 md:hidden">
+                {filteredProducts.length > 1 && filteredProducts.map((_, i) => {
+                    const distance = Math.abs(i - centeredIndex);
+                    const isVisible = distance <= 1;
+                    const isFocus = distance === 0;
 
-                        return (
-                            <div
-                                key={i}
-                                className={`transition-all duration-300 rounded-full bg-brand-choco ${isFocus ? 'w-2 h-2 opacity-100 mx-1' :
-                                    isVisible ? 'w-1.5 h-1.5 opacity-40 mx-1' :
-                                        'w-0 h-0 opacity-0 mx-0'
-                                    }`}
-                            />
-                        );
-                    })}
-                </div>
-            )}
+                    return (
+                        <div
+                            key={i}
+                            className={`transition-all duration-300 rounded-full bg-brand-choco ${isFocus ? 'w-2 h-2 opacity-100 mx-1' :
+                                isVisible ? 'w-1.5 h-1.5 opacity-40 mx-1' :
+                                    'w-0 h-0 opacity-0 mx-0'
+                                }`}
+                        />
+                    );
+                })}
+            </div>
             <div className="relative -mx-6 md:mx-0">
 
                 {/* Degradados laterales para mobile */}
-                <div className="absolute left-0 top-0 bottom-0 w-12 z-20 pointer-events-none bg-gradient-to-r from-brand-bg to-transparent md:hidden" />
-                <div className="absolute right-0 top-0 bottom-0 w-12 z-20 pointer-events-none bg-gradient-to-l from-brand-bg to-transparent md:hidden" />
+                <div className={`absolute left-0 top-0 bottom-0 w-12 z-20 pointer-events-none bg-gradient-to-r from-brand-bg to-transparent md:hidden transition-opacity duration-300 ${centeredIndex > 0 ? 'opacity-100' : 'opacity-0'}`} />
+                <div className={`absolute right-0 top-0 bottom-0 w-12 z-20 pointer-events-none bg-gradient-to-l from-brand-bg to-transparent md:hidden transition-opacity duration-300 ${centeredIndex < filteredProducts.length - 1 ? 'opacity-100' : 'opacity-0'}`} />
 
                 <div
                     ref={scrollContainerRef}
