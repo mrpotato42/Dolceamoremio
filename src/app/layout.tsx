@@ -9,6 +9,11 @@ export const metadata = {
   },
 };
 
+import { Header } from '@/components/navigation/header';
+import { TapBar } from '@/components/navigation/tap-bar';
+import { CartDrawer } from '@/components/cart/cart-drawer';
+import { Toast } from '@/components/ui/toast';
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='es' className={`
@@ -18,7 +23,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       ${fontNumber.variable}
     `}>
       <body>
-        {children}
+        <div className='min-h-svh w-full bg-brand-bg flex justify-center overflow-x-hidden'>
+          {children}
+          
+          {/* Fixed navigation elements (positioned outside overflow-hidden) */}
+          <Header />
+          <TapBar />
+          
+          {/* Global Overlays */}
+          <CartDrawer />
+          <Toast />
+        </div>
       </body>
     </html>
   );
