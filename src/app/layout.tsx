@@ -1,6 +1,10 @@
 import '@/styles/index.css';
 import type { ReactNode } from 'react';
 import { fontTitle, fontSubtitle, fontBody, fontNumber } from '@/lib/fonts/fonts';
+import { Header } from '@/components/navigation/header';
+import { TapBar } from '@/components/navigation/tap-bar';
+import { CartDrawer } from '@/components/cart/cart-drawer';
+import { Toast } from '@/components/ui/toast';
 
 export const metadata = {
   title: 'Dolce Amoremio',
@@ -9,10 +13,6 @@ export const metadata = {
   },
 };
 
-import { Header } from '@/components/navigation/header';
-import { TapBar } from '@/components/navigation/tap-bar';
-import { CartDrawer } from '@/components/cart/cart-drawer';
-import { Toast } from '@/components/ui/toast';
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
