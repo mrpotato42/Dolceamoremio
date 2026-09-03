@@ -3,52 +3,62 @@ Pydantic schemas for request/response validation.
 Organized by domain entity.
 """
 
-from app.schemas.category import (
-    CategoryBase,
-    CategoryCreate,
-    CategoryRead,
-)
+from app.schemas.state import StateBase, StateCreate, StateRead
+from app.schemas.client import ClientBase, ClientCreate, ClientRead
+from app.schemas.category import CategoryBase, CategoryCreate, CategoryRead
 from app.schemas.product import (
     ProductBase,
     ProductCreate,
+    ProductUpdate,
     ProductRead,
-    ProductImageRead,
 )
-from app.schemas.customer import (
-    CustomerBase,
-    CustomerCreate,
-    CustomerRead,
+from app.schemas.cart import (
+    CartItemAdd,
+    CartItemUpdate,
+    CartItemRead,
+    CartRead,
 )
 from app.schemas.order import (
     OrderCreate,
     OrderRead,
-    OrderItemCreate,
-    OrderItemRead,
-    OrderUpdate,
+    OrderProductRead,
+    OrderStatusUpdate,
+    OrderStateHistoryRead,
 )
 from app.schemas.custom_order import (
     CustomOrderCreate,
+    CustomOrderQuote,
     CustomOrderRead,
-    CustomOrderUpdate,
 )
+from app.schemas.payment import PaymentCreate, PaymentUpdate, PaymentRead
 
 __all__ = [
+    "StateBase",
+    "StateCreate",
+    "StateRead",
+    "ClientBase",
+    "ClientCreate",
+    "ClientRead",
     "CategoryBase",
     "CategoryCreate",
     "CategoryRead",
     "ProductBase",
     "ProductCreate",
+    "ProductUpdate",
     "ProductRead",
-    "ProductImageRead",
-    "CustomerBase",
-    "CustomerCreate",
-    "CustomerRead",
+    "CartItemAdd",
+    "CartItemUpdate",
+    "CartItemRead",
+    "CartRead",
     "OrderCreate",
     "OrderRead",
-    "OrderItemCreate",
-    "OrderItemRead",
-    "OrderUpdate",
+    "OrderProductRead",
+    "OrderStatusUpdate",
+    "OrderStateHistoryRead",
     "CustomOrderCreate",
+    "CustomOrderQuote",
     "CustomOrderRead",
-    "CustomOrderUpdate",
+    "PaymentCreate",
+    "PaymentUpdate",
+    "PaymentRead",
 ]

@@ -2,44 +2,53 @@
 Product schemas for API request/response validation.
 """
 
+import uuid
+from decimal import Decimal
+
 from pydantic import BaseModel, Field
 
-
-class ProductImageRead(BaseModel):
-    """Schema for reading a product image."""
-    id: str
-    url: str
-    alt_text: str = ""
-    display_order: int = 0
-    is_primary: bool = False
-
-    model_config = {"from_attributes": True}
+from app.models.product import PriceType
+from app.schemas.category import CategoryRead
 
 
 class ProductBase(BaseModel):
     """Shared fields for product operations."""
-    name: str = Field(..., min_length=1, max_length=200, examples=["Matilda de Chocolate"])
-    slug: str = Field(..., min_length=1, max_length=200, examples=["torta-matilda-chocolate"])
-    description: str = Field(default="", examples=["La clásica torta de chocolate..."])
-    price: int = Field(..., gt=0, examples=[85000])
-    price_type: str = Field(default="fixed", examples=["fixed", "starting_from"])
+    name: str = Field(..., min_length=1, max_length=150, examples=["Matilda de Chocolate"])
+    slug: str = Field(
+        ..., min_length=1, max_length=200, examples=["torta-matilda-chocolate"]
+    )
+    description: str | None = Field(
+        default=None, examples=["La clásica torta de chocolate, húmeda y rellena..."]
+    )
+    image_url: str | None = Field(default=None, max_length=500, examples=["/landing1.webp"])
+    price: Decimal = Field(..., ge=0, examples=[85000])
+    price_type: PriceType = PriceType.FIXED
     is_featured: bool = False
     is_active: bool = True
-    stock: int | None = None
 
 
 class ProductCreate(ProductBase):
     """Schema for creating a new product."""
-    category_id: str
+    id_category: uuid.UUID
+
+
+class ProductUpdate(BaseModel):
+    """Schema for partially updating a product (admin use)."""
+    name: str | None = Field(default=None, min_length=1, max_length=150)
+    slug: str | None = Field(default=None, min_length=1, max_length=200)
+    description: str | None = None
+    image_url: str | None = Field(default=None, max_length=500)
+    price: Decimal | None = Field(default=None, ge=0)
+    price_type: PriceType | None = None
+    is_featured: bool | None = None
+    is_active: bool | None = None
+    id_category: uuid.UUID | None = None
 
 
 class ProductRead(ProductBase):
-    """Schema for reading a product (includes relationships)."""
-    id: str
-    category_id: str
-    category_name: str | None = None
-    images: list[ProductImageRead] = []
-    created_at: str | None = None
-    updated_at: str | None = None
+    """Schema for reading a product, with its category expanded."""
+    id_product: uuid.UUID
+    id_category: uuid.UUID
+    category: CategoryRead | None = None
 
     model_config = {"from_attributes": True}

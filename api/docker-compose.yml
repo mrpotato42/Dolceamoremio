@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: dolceamoremio-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dolce
+      POSTGRES_PASSWORD: dolce
+      POSTGRES_DB: dolceamoremio
+    ports:
+      - "5432:5432"
+    volumes:
+      - dolce_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dolce -d dolceamoremio"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dolce_pgdata:

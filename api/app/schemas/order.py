@@ -1,67 +1,98 @@
 """
 Order schemas for API request/response validation.
+
+Covers catalog checkouts. Custom quote requests share the orders table but have
+their own schemas in app.schemas.custom_order.
 """
 
-from pydantic import BaseModel, Field
+import uuid
+from datetime import datetime
+from decimal import Decimal
+
+from pydantic import BaseModel, EmailStr, Field
+
+from app.schemas.client import ClientRead
+from app.schemas.product import ProductRead
+from app.schemas.state import StateRead
 
 
-class OrderItemCreate(BaseModel):
-    """Schema for an item within an order creation request."""
-    product_id: str
-    quantity: int = Field(..., ge=1, le=100)
-    special_instructions: str = ""
-
-
-class OrderItemRead(BaseModel):
-    """Schema for reading an order item."""
-    id: str
-    product_id: str
-    product_name: str | None = None
+class OrderProductRead(BaseModel):
+    """Schema for reading an order line item (price snapshot)."""
+    id_product: uuid.UUID
     quantity: int
-    unit_price: int
-    special_instructions: str = ""
+    unit_price: Decimal
+    item_subtotal: Decimal
+    special_instructions: str | None = None
+    product: ProductRead | None = None
 
     model_config = {"from_attributes": True}
 
 
 class OrderCreate(BaseModel):
     """
-    Schema for creating a new order from checkout.
-    Customer info is included inline (we find-or-create the customer).
+    Schema for converting a cart into an order at checkout.
+
+    Client details are sent inline — the API finds an existing client by email
+    or creates one, so shoppers never need an account.
     """
-    # Customer info
-    full_name: str = Field(..., min_length=1, max_length=200)
-    email: str = Field(..., min_length=5)
-    phone: str = Field(default="", max_length=20)
+    id_cart: uuid.UUID
+
+    # Client info (find-or-create by email)
+    name: str = Field(..., min_length=1, max_length=150, examples=["Ana García"])
+    email: EmailStr = Field(..., examples=["ana@ejemplo.com"])
+    phone1: str = Field(..., min_length=1, max_length=20, examples=["+57 300 000 0000"])
 
     # Delivery info
-    delivery_address: str = Field(..., min_length=5)
-    delivery_date: str | None = None
-    delivery_notes: str = ""
+    delivery_address: str = Field(..., min_length=5, max_length=255)
+    delivery_date: datetime | None = None
+    description_order: str | None = Field(
+        default=None, examples=["Dejar en portería, cuidado con alergias"]
+    )
 
-    # Items
-    items: list[OrderItemCreate] = Field(..., min_length=1)
+
+class OrderStatusUpdate(BaseModel):
+    """Schema for moving an order to a new state (admin use)."""
+    id_state: uuid.UUID
+    notes: str | None = Field(
+        default=None, examples=["Confirmado por WhatsApp con la clienta"]
+    )
 
 
-class OrderUpdate(BaseModel):
-    """Schema for updating order status (admin use)."""
-    status: str = Field(..., examples=["confirmed", "preparing", "ready", "delivered", "cancelled"])
+class OrderStateHistoryRead(BaseModel):
+    """Schema for reading one entry of an order's state history."""
+    id_order_state_history: uuid.UUID
+    changed_at: datetime
+    notes: str | None = None
+    state: StateRead | None = None
+
+    model_config = {"from_attributes": True}
 
 
 class OrderRead(BaseModel):
     """Schema for reading a full order."""
-    id: str
-    order_number: str
-    customer_id: str
-    status: str
-    subtotal: int
-    shipping_cost: int
-    total: int
-    delivery_address: str
-    delivery_date: str | None = None
-    delivery_notes: str = ""
-    items: list[OrderItemRead] = []
-    created_at: str | None = None
-    updated_at: str | None = None
+    id_order: uuid.UUID
+    id_cart: uuid.UUID | None = None
+    id_client: uuid.UUID
+    id_state: uuid.UUID
+    is_custom: bool = False
+
+    delivery_address: str | None = None
+    delivery_date: datetime | None = None
+    description_order: str | None = None
+
+    # Custom-order fields, null on a catalog checkout
+    event_type: str | None = None
+    guest_count: int | None = None
+    reference_image: str | None = None
+    quoted_price: Decimal | None = None
+
+    shipping_cost: Decimal
+    subtotal: Decimal
+    total: Decimal
+    created_at: datetime
+
+    client: ClientRead | None = None
+    state: StateRead | None = None
+    items: list[OrderProductRead] = []
 
     model_config = {"from_attributes": True}

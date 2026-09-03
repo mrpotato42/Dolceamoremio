@@ -2,6 +2,9 @@
 Category schemas for API request/response validation.
 """
 
+import uuid
+from datetime import datetime
+
 from pydantic import BaseModel, Field
 
 
@@ -19,8 +22,8 @@ class CategoryCreate(CategoryBase):
 
 
 class CategoryRead(CategoryBase):
-    """Schema for reading a category (includes ID and timestamp)."""
-    id: str
-    created_at: str | None = None
+    """Schema for reading a category."""
+    id_category: uuid.UUID
+    created_at: datetime
 
     model_config = {"from_attributes": True}

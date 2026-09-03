@@ -1,48 +1,56 @@
 """
-CustomOrder schemas for API request/response validation.
+Custom order (quote request) schemas.
+
+A custom order is a row in `orders` with no cart attached — see app.models.order.
+These schemas mirror the fields the storefront's custom-order form collects.
 """
 
-from pydantic import BaseModel, Field
+import uuid
+from datetime import datetime
+from decimal import Decimal
+
+from pydantic import BaseModel, EmailStr, Field
 
 
 class CustomOrderCreate(BaseModel):
     """
-    Schema for creating a custom order request.
-    Customer info is included inline (find-or-create).
+    Schema for submitting a custom order request.
+
+    Client details are sent inline (find-or-create by email), same as checkout.
     """
-    # Customer info
-    full_name: str = Field(..., min_length=1, max_length=200)
-    email: str = Field(..., min_length=5)
+    # Client info
+    name: str = Field(..., min_length=1, max_length=150, examples=["Ana García"])
+    email: EmailStr = Field(..., examples=["ana@ejemplo.com"])
+    phone1: str | None = Field(default=None, max_length=20)
 
-    # Order details
-    event_date: str | None = None
-    occasion: str = Field(default="", max_length=100, examples=["Boda", "Cumpleaños"])
-    guest_count: str = Field(default="", max_length=20, examples=["10 – 20", "50 – 100"])
-    description: str = Field(default="", examples=["Torta de 3 pisos con temática botánica..."])
-    reference_image_url: str | None = None
+    # Request details
+    delivery_date: datetime | None = Field(default=None, description="Fecha del evento")
+    event_type: str | None = Field(default=None, max_length=100, examples=["Boda"])
+    guest_count: int | None = Field(default=None, ge=0, examples=[50])
+    description_order: str | None = Field(
+        default=None, examples=["Torta de 3 pisos con temática botánica..."]
+    )
+    reference_image: str | None = None
 
 
-class CustomOrderUpdate(BaseModel):
-    """Schema for updating a custom order (admin use)."""
-    status: str | None = Field(default=None, examples=["quoted", "accepted", "in_progress"])
-    quoted_price: int | None = None
-    admin_notes: str | None = None
+class CustomOrderQuote(BaseModel):
+    """Schema for the shop answering a quote request (admin use)."""
+    quoted_price: Decimal = Field(..., ge=0, examples=[450000])
+    id_state: uuid.UUID | None = None
+    notes: str | None = None
 
 
 class CustomOrderRead(BaseModel):
-    """Schema for reading a custom order."""
-    id: str
-    request_number: str
-    customer_id: str
-    status: str
-    event_date: str | None = None
-    occasion: str = ""
-    guest_count: str = ""
-    description: str = ""
-    reference_image_url: str | None = None
-    quoted_price: int | None = None
-    admin_notes: str = ""
-    created_at: str | None = None
-    updated_at: str | None = None
+    """Schema for reading a custom order request."""
+    id_order: uuid.UUID
+    id_client: uuid.UUID
+    id_state: uuid.UUID
+    delivery_date: datetime | None = None
+    event_type: str | None = None
+    guest_count: int | None = None
+    description_order: str | None = None
+    reference_image: str | None = None
+    quoted_price: Decimal | None = None
+    created_at: datetime
 
     model_config = {"from_attributes": True}

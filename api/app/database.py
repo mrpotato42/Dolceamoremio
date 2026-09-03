@@ -1,28 +1,19 @@
 """
-Async database engine and session management.
-Supports SQLite (dev) and PostgreSQL (production) via DATABASE_URL.
+Async database engine and session management (PostgreSQL via asyncpg).
 """
 
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy.pool import StaticPool
+from collections.abc import AsyncGenerator
+
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
 from app.config import get_settings
 
 settings = get_settings()
 
-# Engine configuration adapts to the database backend
-engine_kwargs = {}
-
-if settings.is_sqlite:
-    # SQLite needs special handling for async + in-memory testing
-    engine_kwargs = {
-        "connect_args": {"check_same_thread": False},
-        "poolclass": StaticPool,
-    }
-
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo=settings.APP_DEBUG,
-    **engine_kwargs,
+    pool_pre_ping=True,
 )
 
 # Session factory — each request gets its own session
@@ -33,10 +24,10 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 
-async def get_db() -> AsyncSession:
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """
     FastAPI dependency that yields a database session.
-    Automatically closes the session when the request is done.
+    Commits on success, rolls back on error, always closes.
 
     Usage:
         @router.get("/products")
