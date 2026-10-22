@@ -48,6 +48,7 @@ class Product(Base):
         UUID(as_uuid=True),
         ForeignKey("categories.id_category", ondelete="RESTRICT"),
         nullable=False,
+        index=True,
     )
     name: Mapped[str] = mapped_column(String(150), nullable=False)
     slug: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)

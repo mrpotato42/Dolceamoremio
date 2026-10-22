@@ -29,6 +29,10 @@ class ProductCart(Base):
         CheckConstraint(
             "item_subtotal >= 0", name="ck_product_cart_item_subtotal_non_negative"
         ),
+        CheckConstraint(
+            "item_subtotal = quantity * unit_price",
+            name="ck_product_cart_item_subtotal_matches",
+        ),
     )
 
     id_cart: Mapped[uuid.UUID] = mapped_column(
@@ -40,6 +44,9 @@ class ProductCart(Base):
         UUID(as_uuid=True),
         ForeignKey("products.id_product", ondelete="RESTRICT"),
         primary_key=True,
+        # The composite PK (id_cart/id_order, id_product) only serves lookups
+        # that start with its first column; this one covers "lines for a product".
+        index=True,
     )
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
     unit_price: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)

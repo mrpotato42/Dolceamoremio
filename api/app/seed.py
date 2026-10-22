@@ -1,19 +1,30 @@
 """
-Seed the database with the reference data the app cannot run without.
+Seed the database with reference and demo data — two tiers, kept separate.
 
-States are required: every order needs an id_state, so an empty states table
-makes checkout impossible. Categories and products mirror the storefront's
-current hardcoded catalog (src/lib/data/products.ts).
+  - seed_core(): states + categories. Required in every environment — every
+    order needs an id_state, so an empty states table makes checkout
+    impossible. Safe (and necessary) to run against production.
 
-Run with:  python -m app.seed
-Idempotent — re-running it does not duplicate rows.
+  - seed_demo_products(): the 8 placeholder products migrated from the
+    storefront's mock catalog (src/lib/data/products.ts). Local/staging only —
+    running this against production would show fake inventory to real
+    customers.
+
+Run with:
+    python -m app.seed              # core + demo products (local dev)
+    python -m app.seed --core-only  # states + categories only (production)
+
+Idempotent — re-running either tier does not duplicate rows.
 """
 
 import asyncio
+import sys
 from decimal import Decimal
 
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.config import get_settings
 from app.database import AsyncSessionLocal
 from app.models import Category, Product, State
 from app.models.product import PriceType
@@ -130,75 +141,96 @@ PRODUCTS: list[tuple] = [
 ]
 
 
-async def seed() -> None:
+async def seed_core(db: AsyncSession) -> tuple[int, int]:
+    """States + categories. Required everywhere, production included."""
+    existing_states = set(
+        (await db.execute(select(State.name))).scalars().all()
+    )
+    new_states = [
+        State(name=name, description=description)
+        for name, description in STATES
+        if name not in existing_states
+    ]
+    db.add_all(new_states)
+
+    existing_categories = set(
+        (await db.execute(select(Category.slug))).scalars().all()
+    )
+    new_categories = [
+        Category(name=name, slug=slug, display_order=order)
+        for name, slug, order in CATEGORIES
+        if slug not in existing_categories
+    ]
+    db.add_all(new_categories)
+    await db.flush()  # products need real category ids, even within this call
+
+    return len(new_states), len(new_categories)
+
+
+async def seed_demo_products(db: AsyncSession) -> int:
+    """Placeholder catalog for local development. Never run against production."""
+    category_ids = {
+        slug: id_category
+        for id_category, slug in (
+            await db.execute(select(Category.id_category, Category.slug))
+        ).all()
+    }
+    existing_products = set(
+        (await db.execute(select(Product.slug))).scalars().all()
+    )
+    new_products = [
+        Product(
+            slug=slug,
+            name=name,
+            id_category=category_ids[category_slug],
+            price=price,
+            price_type=price_type,
+            image_url=image_url,
+            is_featured=is_featured,
+            description=description,
+        )
+        for (
+            slug,
+            name,
+            category_slug,
+            price,
+            price_type,
+            image_url,
+            is_featured,
+            description,
+        ) in PRODUCTS
+        if slug not in existing_products
+    ]
+    db.add_all(new_products)
+
+    return len(new_products)
+
+
+async def seed(include_demo_products: bool = True) -> None:
+    settings = get_settings()
+    if include_demo_products and settings.is_production:
+        raise RuntimeError(
+            "Refusing to insert demo products: APP_ENV=production. "
+            "Run `python -m app.seed --core-only` instead."
+        )
+
     async with AsyncSessionLocal() as db:
-        # --- States ---
-        existing_states = set(
-            (await db.execute(select(State.name))).scalars().all()
-        )
-        new_states = [
-            State(name=name, description=description)
-            for name, description in STATES
-            if name not in existing_states
-        ]
-        db.add_all(new_states)
+        states_count, categories_count = await seed_core(db)
 
-        # --- Categories ---
-        existing_categories = set(
-            (await db.execute(select(Category.slug))).scalars().all()
-        )
-        new_categories = [
-            Category(name=name, slug=slug, display_order=order)
-            for name, slug, order in CATEGORIES
-            if slug not in existing_categories
-        ]
-        db.add_all(new_categories)
-        await db.flush()
-
-        # --- Products ---
-        category_ids = {
-            slug: id_category
-            for id_category, slug in (
-                await db.execute(select(Category.id_category, Category.slug))
-            ).all()
-        }
-        existing_products = set(
-            (await db.execute(select(Product.slug))).scalars().all()
-        )
-        new_products = [
-            Product(
-                slug=slug,
-                name=name,
-                id_category=category_ids[category_slug],
-                price=price,
-                price_type=price_type,
-                image_url=image_url,
-                is_featured=is_featured,
-                description=description,
-            )
-            for (
-                slug,
-                name,
-                category_slug,
-                price,
-                price_type,
-                image_url,
-                is_featured,
-                description,
-            ) in PRODUCTS
-            if slug not in existing_products
-        ]
-        db.add_all(new_products)
+        products_count = 0
+        if include_demo_products:
+            products_count = await seed_demo_products(db)
 
         await db.commit()
 
         print(
             f"Seed listo — "
-            f"{len(new_states)} estados, "
-            f"{len(new_categories)} categorías, "
-            f"{len(new_products)} productos insertados."
+            f"{states_count} estados, "
+            f"{categories_count} categorías, "
+            f"{products_count} productos insertados."
         )
 
 
 if __name__ == "__main__":
-    asyncio.run(seed())
+    core_only = "--core-only" in sys.argv
+    asyncio.run(seed(include_demo_products=not core_only))

@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Minus, Plus, ShoppingBag, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { type Product, formatPrice } from '@/lib/data/products';
-import { useCartStore } from '@/stores/use-cart-store';
+import type { Product } from '@/services/types';
+import { formatProductPrice, productImage } from '@/lib/format';
+import { useCartStore, MAX_LINE_QUANTITY } from '@/stores/use-cart-store';
 import { FadeIn } from '@/components/animations/fade-in';
 
 interface ProductViewProps {
@@ -17,7 +18,7 @@ export const ProductView = ({ product }: ProductViewProps) => {
     const [quantity, setQuantity] = useState(1);
     const addItem = useCartStore((state) => state.addItem);
 
-    const handleIncrease = () => setQuantity((prev) => prev + 1);
+    const handleIncrease = () => setQuantity((prev) => Math.min(prev + 1, MAX_LINE_QUANTITY));
     const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
     const handleAddToCart = () => {
@@ -41,14 +42,14 @@ export const ProductView = ({ product }: ProductViewProps) => {
                     <FadeIn direction="left" distance={40}>
                         <div className="relative aspect-4/5 rounded-4xl overflow-hidden bg-brand-soft/20 shadow-2xl">
                             <Image
-                                src={product.image}
+                                src={productImage(product)}
                                 alt={product.name}
                                 fill
                                 className="object-cover"
                                 priority
                                 sizes="(max-width: 768px) 100vw, 50vw"
                             />
-                            {product.isFeatured && (
+                            {product.is_featured && (
                                 <div className="absolute top-8 left-8 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full">
                                     <span className="font-body text-xs uppercase tracking-[0.2em] text-brand-choco font-bold">Edición Especial</span>
                                 </div>
@@ -61,7 +62,7 @@ export const ProductView = ({ product }: ProductViewProps) => {
                         <FadeIn direction="up" distance={20} delay={0.2}>
                             <div className="flex flex-col gap-2 mb-8">
                                 <span className="font-body text-xs uppercase tracking-[0.4em] text-brand-pink font-semibold">
-                                    {product.category}
+                                    {product.category?.name}
                                 </span>
                                 <h1 className="font-title text-5xl md:text-7xl lg:text-8xl text-brand-choco leading-tight">
                                     {product.name}
@@ -72,7 +73,7 @@ export const ProductView = ({ product }: ProductViewProps) => {
                         <FadeIn direction="up" distance={20} delay={0.3}>
                             <div className="flex flex-col gap-6 mb-12 py-8 border-y border-brand-choco/10">
                                 <span className="font-title text-4xl text-brand-choco">
-                                    {formatPrice(product.price)}
+                                    {formatProductPrice(product)}
                                 </span>
                                 <p className="font-body text-brand-choco/60 text-lg leading-relaxed">
                                     {product.description}

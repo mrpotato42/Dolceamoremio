@@ -12,7 +12,9 @@ class ClientBase(BaseModel):
     """Shared fields for client operations."""
     name: str = Field(..., min_length=1, max_length=150, examples=["Ana García"])
     email: EmailStr = Field(..., examples=["ana@ejemplo.com"])
-    phone1: str = Field(..., min_length=1, max_length=20, examples=["+57 300 000 0000"])
+    # Optional here because a quote request only collects name and email; the
+    # checkout enforces a phone through OrderCreate instead.
+    phone1: str | None = Field(default=None, max_length=20, examples=["+57 300 000 0000"])
     phone2: str | None = Field(default=None, max_length=20)
     address: str | None = Field(default=None, max_length=255)
     document_identification: str | None = Field(default=None, max_length=30)

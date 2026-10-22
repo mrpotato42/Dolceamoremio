@@ -6,7 +6,7 @@ import { X, ShoppingBag, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useCartStore } from '@/stores/use-cart-store';
 import { CartItem } from './cart-item';
-import { formatPrice } from '@/lib/data/products';
+import { formatPrice } from '@/lib/format';
 
 export const CartDrawer = () => {
     // Handling hydration mismatch by only rendering after mount
@@ -15,10 +15,15 @@ export const CartDrawer = () => {
     const closeCart = useCartStore((state) => state.closeCart);
     const items = useCartStore((state) => state.items);
     const getSubtotal = useCartStore((state) => state.getSubtotal);
+    const syncCart = useCartStore((state) => state.syncCart);
+    const error = useCartStore((state) => state.error);
 
     useEffect(() => {
         setMounted(true);
-    }, []);
+        // The drawer is in every layout, so this is where a returning visitor's
+        // cart is fetched from the API.
+        syncCart();
+    }, [syncCart]);
 
     // Also close on escape key
     useEffect(() => {
@@ -68,6 +73,12 @@ export const CartDrawer = () => {
                             </button>
                         </div>
 
+                        {error && (
+                            <p role="alert" className="mx-6 mt-4 px-4 py-3 rounded-xl bg-red-50 font-body text-sm text-red-700">
+                                {error}
+                            </p>
+                        )}
+
                         {/* Cart Items Area */}
                         <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
                             {items.length === 0 ? (
@@ -86,7 +97,7 @@ export const CartDrawer = () => {
                             ) : (
                                 <div className="flex flex-col">
                                     {items.map((item) => (
-                                        <CartItem key={item.id} item={item} />
+                                        <CartItem key={item.id_product} item={item} />
                                     ))}
                                 </div>
                             )}

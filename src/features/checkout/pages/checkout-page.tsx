@@ -5,7 +5,9 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useCartStore } from '@/stores/use-cart-store';
-import { formatPrice } from '@/lib/data/products';
+import { formatPrice, productImage } from '@/lib/format';
+import { createOrder, dateInputToISO } from '@/services/orderService';
+import { messageOf } from '@/services/api';
 import Image from 'next/image';
 
 export const CheckoutPage = () => {
@@ -13,27 +15,54 @@ export const CheckoutPage = () => {
     const items = useCartStore((state) => state.items);
     const getSubtotal = useCartStore((state) => state.getSubtotal);
     const clearCart = useCartStore((state) => state.clearCart);
+    const cartId = useCartStore((state) => state.cartId);
+    const syncCart = useCartStore((state) => state.syncCart);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         setMounted(true);
-    }, []);
+        // Prices may have changed since the cart was filled; show what the API
+        // will actually charge.
+        syncCart();
+    }, [syncCart]);
 
     const subtotal = mounted ? getSubtotal() : 0;
-    const shipping = 15000; // Flat rate mock
+    // Display only — mirrors the API's SHIPPING_COST setting. The order's real
+    // total is computed by the API and is what gets stored.
+    const shipping = 15000;
     const total = subtotal + shipping;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!cartId) return;
+
+        const form = new FormData(e.currentTarget);
+        const field = (name: string) => String(form.get(name) ?? '').trim();
+
         setIsSubmitting(true);
-        // Simulate network request
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setIsSuccess(true);
+        setError(null);
+        try {
+            await createOrder({
+                id_cart: cartId,
+                name: field('name'),
+                email: field('email'),
+                phone1: field('phone1'),
+                delivery_address: field('delivery_address'),
+                delivery_date: dateInputToISO(field('delivery_date')),
+                description_order: field('description_order') || null,
+            });
+            // The API marked the cart 'converted'; a new one is opened on the
+            // next add.
             clearCart();
-        }, 2000);
+            setIsSuccess(true);
+        } catch (err) {
+            setError(messageOf(err));
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     if (!mounted) return <div className="min-h-screen bg-brand-bg relative selection:bg-brand-pink/20 selection:text-brand-choco" />;
@@ -103,15 +132,15 @@ export const CheckoutPage = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Nombre completo</label>
-                                        <input required type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Ej. Ana García" />
+                                        <input required name="name" maxLength={150} type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Ej. Ana García" />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Teléfono</label>
-                                        <input required type="tel" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="+57 300 000 0000" />
+                                        <input required name="phone1" maxLength={20} type="tel" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="+57 300 000 0000" />
                                     </div>
                                     <div className="flex flex-col gap-2 md:col-span-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Correo Electrónico</label>
-                                        <input required type="email" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="ana@ejemplo.com" />
+                                        <input required name="email" type="email" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="ana@ejemplo.com" />
                                     </div>
                                 </div>
                             </div>
@@ -123,16 +152,16 @@ export const CheckoutPage = () => {
                                 <div className="grid grid-cols-1 gap-6">
                                     <div className="flex flex-col gap-2">
                                         <label className="font-body text-sm text-brand-choco/80 font-medium">Dirección de envío</label>
-                                        <input required type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Calle 123 #45-67, Apto 801" />
+                                        <input required name="delivery_address" minLength={5} maxLength={255} type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Calle 123 #45-67, Apto 801" />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="flex flex-col gap-2">
                                             <label className="font-body text-sm text-brand-choco/80 font-medium">Fecha de entrega</label>
-                                            <input required type="date" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco/60" />
+                                            <input required name="delivery_date" type="date" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco/60" />
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <label className="font-body text-sm text-brand-choco/80 font-medium">Indicaciones especiales</label>
-                                            <input type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Dejar en portería, cuidado con alergias, etc." />
+                                            <input name="description_order" type="text" className="bg-transparent border-b border-brand-choco/30 py-2 focus:border-brand-pink outline-none transition-colors font-body text-brand-choco placeholder:text-brand-choco/30" placeholder="Dejar en portería, cuidado con alergias, etc." />
                                         </div>
                                     </div>
                                 </div>
@@ -152,15 +181,15 @@ export const CheckoutPage = () => {
                             {/* Items */}
                             <div className="flex flex-col gap-6 max-h-[40vh] overflow-y-auto mb-8 pr-2 scrollbar-hide">
                                 {items.map(item => (
-                                    <div key={item.id} className="flex gap-4">
+                                    <div key={item.id_product} className="flex gap-4">
                                         <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0">
-                                            <Image src={item.image} alt={item.name} fill className="object-cover" />
+                                            <Image src={productImage(item.product)} alt={item.product?.name ?? 'Producto'} fill className="object-cover" />
                                         </div>
                                         <div className="flex flex-col flex-1 text-sm">
-                                            <span className="font-body font-medium text-brand-choco">{item.name}</span>
+                                            <span className="font-body font-medium text-brand-choco">{item.product?.name}</span>
                                             <span className="font-body text-brand-choco/50">Cant: {item.quantity}</span>
                                             <span className="font-title text-brand-choco mt-1 font-bold">
-                                                {formatPrice(typeof item.price === 'string' ? (parseInt(item.price.replace(/\D/g, ''), 10)) * item.quantity : item.price * item.quantity)}
+                                                {formatPrice(item.item_subtotal)}
                                             </span>
                                         </div>
                                     </div>
@@ -182,6 +211,12 @@ export const CheckoutPage = () => {
                                     <span className="font-title text-2xl text-brand-pink">{formatPrice(total)}</span>
                                 </div>
                             </div>
+
+                            {error && (
+                                <p role="alert" className="mb-4 px-4 py-3 rounded-xl bg-red-50 font-body text-sm text-red-700">
+                                    {error}
+                                </p>
+                            )}
 
                             <button
                                 type="submit"

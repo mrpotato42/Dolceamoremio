@@ -3,6 +3,8 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ImageIcon, Check, X, ArrowRight } from 'lucide-react';
+import { createCustomOrder, dateInputToISO } from '@/services/orderService';
+import { messageOf } from '@/services/api';
 
 const OCCASION_OPTIONS = [
     'Cumpleaños',
@@ -15,17 +17,23 @@ const OCCASION_OPTIONS = [
     'Otro',
 ];
 
+// The API stores guest_count as a whole number, so each range is sent as its
+// lower bound — "at least this many". It is the only reading that keeps the
+// four options distinct ('50 – 100' and '100+' would otherwise both be 100).
 const GUESTS_OPTIONS = [
-    '10 – 20',
-    '20 – 50',
-    '50 – 100',
-    '100+',
+    { label: '10 – 20', count: 10 },
+    { label: '20 – 50', count: 20 },
+    { label: '50 – 100', count: 50 },
+    { label: '100+', count: 100 },
 ];
 
 export const CustomOrderForm = () => {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [selectedOccasion, setSelectedOccasion] = useState<string | null>(null);
-    const [selectedGuests, setSelectedGuests] = useState<string | null>(null);
+    const [selectedGuests, setSelectedGuests] = useState<number | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +50,50 @@ export const CustomOrderForm = () => {
         if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const form = new FormData(e.currentTarget);
+        const field = (name: string) => String(form.get(name) ?? '').trim();
+
+        setIsSubmitting(true);
+        setError(null);
+        try {
+            await createCustomOrder({
+                name: field('name'),
+                email: field('email'),
+                delivery_date: dateInputToISO(field('delivery_date')),
+                event_type: selectedOccasion,
+                guest_count: selectedGuests,
+                description_order: field('description_order') || null,
+                // reference_image is not sent: the API stores a URL, and there
+                // is no upload endpoint yet to turn the chosen file into one.
+            });
+            setIsSuccess(true);
+        } catch (err) {
+            setError(messageOf(err));
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    if (isSuccess) {
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center gap-4 py-12 text-center"
+            >
+                <Check size={40} className="text-green-600" />
+                <p className="font-body text-xl text-brand-choco">¡Recibimos tu solicitud!</p>
+                <p className="font-body text-base text-brand-choco/60 max-w-md">
+                    Revisaremos tu idea y te enviaremos la cotización a tu correo.
+                </p>
+            </motion.div>
+        );
+    }
+
     return (
-        <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-16">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-16">
             {/* ROW 1 — Contact Info: Clean, minimal inputs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                 <div className="group">
@@ -51,6 +101,9 @@ export const CustomOrderForm = () => {
                         Nombre
                     </label>
                     <input
+                        required
+                        name="name"
+                        maxLength={150}
                         type="text"
                         placeholder="Tu nombre completo"
                         className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
@@ -61,6 +114,8 @@ export const CustomOrderForm = () => {
                         Correo electronico
                     </label>
                     <input
+                        required
+                        name="email"
                         type="email"
                         placeholder="Tu correo electronico"
                         className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300 placeholder:font-sans"
@@ -76,6 +131,7 @@ export const CustomOrderForm = () => {
                         Fecha del evento
                     </label>
                     <input
+                        name="delivery_date"
                         type="date"
                         className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco/40 focus:border-brand-pink focus:outline-none transition-colors duration-300"
                     />
@@ -112,17 +168,17 @@ export const CustomOrderForm = () => {
                     <div className="flex gap-3">
                         {GUESTS_OPTIONS.map((option) => (
                             <motion.button
-                                key={option}
+                                key={option.label}
                                 type="button"
                                 whileTap={{ scale: 0.95 }}
-                                onClick={() => setSelectedGuests(selectedGuests === option ? null : option)}
-                                className={`flex-1 py-3 rounded-xl font-body text-xs tracking-wide transition-all duration-300 border cursor-pointer ${selectedGuests === option
+                                onClick={() => setSelectedGuests(selectedGuests === option.count ? null : option.count)}
+                                className={`flex-1 py-3 rounded-xl font-body text-xs tracking-wide transition-all duration-300 border cursor-pointer ${selectedGuests === option.count
                                     ? 'bg-brand-choco text-white border-brand-choco shadow-lg'
                                     : 'bg-transparent text-brand-choco/80 border-brand-choco/50 hover:border-brand-choco/30'
                                     }`}
                                 style={{ fontFamily: 'system-ui, sans-serif' }}
                             >
-                                {option}
+                                {option.label}
                             </motion.button>
                         ))}
                     </div>
@@ -132,6 +188,7 @@ export const CustomOrderForm = () => {
                         Cuéntanos tu idea
                     </label>
                     <textarea
+                        name="description_order"
                         rows={4}
                         placeholder="Describe el diseño, sabores, colores o temática que imaginas..."
                         className="w-full bg-transparent border-b border-brand-choco/50 pb-3 font-body text-base text-brand-choco placeholder:text-brand-choco/40 placeholder:font-sans focus:border-brand-pink focus:outline-none transition-colors duration-300 resize-none"
@@ -207,13 +264,19 @@ export const CustomOrderForm = () => {
 
             {/* SUBMIT */}
             <div className="flex flex-col items-center gap-4 pt-4">
+                {error && (
+                    <p role="alert" className="px-4 py-3 rounded-xl bg-red-50 font-body text-sm text-red-700">
+                        {error}
+                    </p>
+                )}
                 <motion.button
                     type="submit"
+                    disabled={isSubmitting}
                     whileHover={{ x: 6 }}
                     whileTap={{ scale: 0.98 }}
                     className="group inline-flex items-center gap-4 font-body text-md uppercase tracking-[0.25em] text-brand-choco hover:text-brand-pink transition-colors duration-300 cursor-pointer"
                 >
-                    Solicitar Cotización
+                    {isSubmitting ? 'Enviando…' : 'Solicitar Cotización'}
                     <ArrowRight size={16} className="group-hover:translate-x-4 transition-transform duration-300" />
                 </motion.button>
             </div>

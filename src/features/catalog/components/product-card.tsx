@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
-import { type Product, formatPrice } from '@/lib/data/products';
+import type { Product } from '@/services/types';
+import { formatProductPrice, productImage } from '@/lib/format';
 import { useCartStore } from '@/stores/use-cart-store';
 
 interface ProductCardProps {
@@ -35,7 +36,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                 {/* Image Container */}
                 <div className="relative w-full aspect-4/5 rounded-2xl md:rounded-3xl overflow-hidden bg-brand-soft/20 mb-6">
                     <Image
-                        src={product.image}
+                        src={productImage(product)}
                         alt={product.name}
                         fill
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -46,7 +47,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                     <div className="absolute inset-0 bg-brand-choco/0 group-hover:bg-brand-choco/20 transition-colors duration-500" />
                     
                     {/* Badge */}
-                    {product.isFeatured && (
+                    {product.is_featured && (
                         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
                             <span className="font-body text-[10px] uppercase tracking-[0.2em] text-brand-choco font-bold">Destacado</span>
                         </div>
@@ -70,7 +71,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                                 {product.name}
                             </h3>
                             <span className="font-title text-xl text-brand-choco whitespace-nowrap">
-                                {formatPrice(product.price)}
+                                {formatProductPrice(product)}
                             </span>
                         </div>
                         <p className="font-body text-sm text-brand-choco/60 line-clamp-2 leading-relaxed">
@@ -80,7 +81,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                     
                     <div className="mt-6 pt-4 border-t border-brand-choco/10">
                         <span className="font-body text-xs uppercase tracking-[0.2em] text-brand-choco/40">
-                            {product.category}
+                            {product.category?.name}
                         </span>
                     </div>
                 </div>

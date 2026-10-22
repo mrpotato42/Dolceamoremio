@@ -50,6 +50,11 @@ class Order(Base):
         CheckConstraint("subtotal >= 0", name="ck_orders_subtotal_non_negative"),
         CheckConstraint("total >= 0", name="ck_orders_total_non_negative"),
         CheckConstraint("quoted_price >= 0", name="ck_orders_quoted_price_non_negative"),
+        # Holds for both kinds: a checkout adds shipping, a quote folds it into
+        # quoted_price and leaves shipping_cost at 0.
+        CheckConstraint(
+            "total = subtotal + shipping_cost", name="ck_orders_total_matches"
+        ),
     )
 
     id_order: Mapped[uuid.UUID] = uuid_pk()

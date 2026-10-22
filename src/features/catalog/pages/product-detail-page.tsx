@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ShoppingBag, Minus, Plus, CreditCard, Sparkles } from 'lucide-react';
 import { getProductBySlug } from '@/services/productService';
-import { type Product, formatPrice } from '@/lib/data/products';
-import { useCartStore } from '@/stores/use-cart-store';
+import type { Product } from '@/services/types';
+import { formatProductPrice, productImage } from '@/lib/format';
+import { useCartStore, MAX_LINE_QUANTITY } from '@/stores/use-cart-store';
 import { FadeIn } from '@/components/animations/fade-in';
 
 interface ProductDetailPageProps {
@@ -23,9 +24,15 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
 
     useEffect(() => {
         const fetchProduct = async () => {
-            const data = await getProductBySlug(slug);
-            setProduct(data);
-            setLoading(false);
+            try {
+                setProduct(await getProductBySlug(slug));
+            } catch {
+                // API unreachable — fall through to the not-found screen
+                // rather than spinning forever.
+                setProduct(null);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchProduct();
     }, [slug]);
@@ -74,7 +81,7 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
                     <FadeIn direction="right" distance={30}>
                         <div className="relative aspect-4/5 rounded-[2.5rem] overflow-hidden bg-brand-soft/20 group shadow-2xl">
                             <Image 
-                                src={product.image} 
+                                src={productImage(product)} 
                                 alt={product.name} 
                                 fill 
                                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
@@ -91,14 +98,14 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
                             <div className="flex flex-col gap-6 mb-10">
                                 <div className="flex flex-col gap-2">
                                     <span className="font-body text-xs uppercase tracking-[0.4em] text-brand-pink font-semibold">
-                                        {product.category}
+                                        {product.category?.name}
                                     </span>
                                     <h1 className="font-title text-5xl md:text-7xl text-brand-choco leading-tight">
                                         {product.name}
                                     </h1>
                                 </div>
                                 <span className="font-title text-3xl text-brand-choco">
-                                    {formatPrice(product.price)}
+                                    {formatProductPrice(product)}
                                 </span>
                                 <p className="font-body text-lg text-brand-choco/70 leading-relaxed">
                                     {product.description}
@@ -139,7 +146,7 @@ export const ProductDetailPage = ({ slug }: ProductDetailPageProps) => {
                                     </button>
                                     <span className="font-body font-bold text-brand-choco">{quantity}</span>
                                     <button 
-                                        onClick={() => setQuantity(quantity + 1)}
+                                        onClick={() => setQuantity(Math.min(quantity + 1, MAX_LINE_QUANTITY))}
                                         className="w-10 h-10 flex items-center justify-center text-brand-choco/50 hover:text-brand-choco transition-colors"
                                     >
                                         <Plus size={18} />

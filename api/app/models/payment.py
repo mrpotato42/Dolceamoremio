@@ -3,6 +3,10 @@ Payment model — payment attempts against an order.
 
 An order can have several payments (a retry after a failure, or a refund), so
 this is 0:M from Order rather than a column on it.
+
+transaction_gateway_id is UNIQUE: gateways retry their webhooks, and the same
+transaction arriving twice must not become two payments. NULLs are distinct in
+PostgreSQL, so attempts not yet sent to a gateway are unaffected.
 """
 
 import enum
@@ -50,7 +54,7 @@ class Payment(Base):
         index=True,
     )
     transaction_gateway_id: Mapped[str | None] = mapped_column(
-        String(255), nullable=True
+        String(255), unique=True, nullable=True
     )
     gateway_status: Mapped[str | None] = mapped_column(String(50), nullable=True)
     paid_method: Mapped[str] = mapped_column(String(50), nullable=False)
